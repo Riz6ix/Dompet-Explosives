@@ -21,6 +21,16 @@ Siapapun diperbolehkan untuk:
 
 ---
 
+## ⚠️ PENTING: Keamanan Data (Cache & Backup)
+
+Aplikasi ini secara default menyimpan data di **LocalStorage Browser**. Mohon perhatikan hal-hal berikut untuk menghindari kehilangan data:
+
+1.  **Jangan Hapus Cache/History Browser:** Menghapus data browser atau menggunakan fitur "Clear Browsing Data" pada website ini akan menghapus seluruh data keuangan Anda.
+2.  **Gunakan Browser yang Sama:** Data yang Anda masukkan di Chrome tidak akan muncul di Firefox atau HP lain (karena bersifat lokal).
+3.  **Wajib Backup Rutin:** Sangat disarankan untuk menggunakan fitur **Export PDF** secara berkala sebagai bentuk backup fisik/digital agar data tetap aman jika terjadi masalah pada browser atau perangkat.
+
+---
+
 ## ✨ Fitur Unggulan
 
 🎨 **Visual yang Memukau**
