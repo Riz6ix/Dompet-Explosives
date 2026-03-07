@@ -1,11 +1,17 @@
 <p align="center">
-  <img src="public/favicon.svg" width="80" alt="KasKelas Logo" />
+  <img src="public/favicon.svg" width="120" alt="KasKelas Logo" />
 </p>
 
 <h1 align="center">KasKelas XII-F5</h1>
 
 <p align="center">
-  <strong>Aplikasi Manajemen Kas Kelas Modern — Cerdas, Cepat & Menyenangkan</strong>
+  <strong>A Modern Class Cash Management WebApp — Smart, Fast, and Fun</strong>
+  <br />
+  <i>Aplikasi Manajemen Kas Kelas Modern — Cerdas, Cepat, dan Menyenangkan</i>
+</p>
+
+<p align="center">
+  <a href="#english">English</a> • <a href="#indonesia">Bahasa Indonesia</a>
 </p>
 
 <p align="center">
@@ -13,211 +19,161 @@
   <img src="https://img.shields.io/badge/Vite-8.0_beta-646CFF?logo=vite&logoColor=white" alt="Vite" />
   <img src="https://img.shields.io/badge/Tailwind_CSS-4.2-06B6D4?logo=tailwindcss&logoColor=white" alt="Tailwind" />
   <img src="https://img.shields.io/badge/License-MIT-green" alt="License" />
+  <img src="https://img.shields.io/badge/Offline--First-Support-blue" alt="Offline-First" />
+  <img src="https://img.shields.io/github/stars/Riz6ix/KasKelas-WebApp?style=social" alt="GitHub stars" />
 </p>
 
-<p align="center">
-  Dibuat khusus untuk bendahara kelas — kelola kas mingguan, iuran khusus, cicilan, transaksi, dan laporan keuangan dalam satu webapp yang ringan dan offline-first.
-</p>
+---
+
+<a name="english"></a>
+## 🌐 English Version
+
+### 🎯 About the Project
+**KasKelas** is a powerful yet lightweight web application designed specifically for class treasurers. It simplifies the tedious task of managing weekly dues, special contributions, installments, and expenses with a modern, gamified interface. Built with an **offline-first** approach, your data stays private and accessible without needing a server.
+
+### ✨ Key Features
+
+#### 💰 Finance Management
+- **Smart Dashboard**: Real-time balance summaries, income vs. expense charts, and daily financial tips.
+- **Weekly Tracking**: Easily monitor student payments per week with simple status toggles.
+- **Special Dues**: Create custom contributions with deadlines and track collection progress.
+- **Installment System**: Students can pay in installments; the system automatically marks them as paid once the target is met.
+- **Transaction History**: Log every penny with categories, filters, and instant search.
+- **Member Portfolios**: Detailed payment history for every individual student.
+
+#### 📊 Reporting & Analytics
+- **Visual Statistics**: Beautiful charts (Chart.js) showing weekly trends and expense distributions.
+- **PDF Export**: Generate professional Master Reports (balance, summaries, member details).
+- **CSV Export**: Export data to spreadsheets for further processing.
+- **WhatsApp Summary**: One-click "copy-to-clipboard" summaries ready to share in class groups.
+
+#### 🎮 Gamification (RPG System)
+- **XP & Leveling**: Earn XP for every action (logging transactions, backups, exports).
+- **Login Streaks**: Build daily streaks to boost your status.
+- **Achievements**: Unlock 10+ badges like "Model Treasurer", "Sigma Grindset", and "Debt Slayer".
+- **Quests**: Complete daily and weekly challenges to level up faster.
+
+#### 🔒 Security & Utility
+- **PIN Protection**: Secure your app with a 4-6 digit PIN.
+- **Backup & Restore**: Full JSON export/import functionality.
+- **Auto-Save**: Automatic data persistence to `localStorage` (1s debounce).
+- **Immersive UX**: Interactive sound effects and haptic feedback.
 
 ---
 
-## Fitur Utama
+<a name="indonesia"></a>
+## 🇮🇩 Versi Bahasa Indonesia
 
-### Keuangan
-- **Dashboard** — Ringkasan saldo real-time, grafik pemasukan vs pengeluaran, tips harian
-- **Kas Mingguan** — Tracking pembayaran per siswa per minggu, toggle lunas/belum bayar
-- **Iuran Khusus** — Buat iuran dengan deadline, pantau progres pengumpulan
-- **Cicilan** — Siswa bisa bayar cicilan untuk kas maupun iuran, otomatis lunas ketika tercukupi
-- **Transaksi** — Catat pemasukan & pengeluaran dengan kategori, filter, dan pencarian
-- **Per Anggota** — Lihat detail pembayaran lengkap per siswa
+### 🎯 Tentang Proyek
+**KasKelas** adalah web aplikasi yang ringan namun bertenaga, dirancang khusus untuk bendahara kelas. Aplikasi ini menyederhanakan tugas membosankan dalam mengelola kas mingguan, iuran khusus, cicilan, dan pengeluaran dengan antarmuka modern yang tergamifikasi. Dibuat dengan pendekatan **offline-first**, data Anda tetap privat dan dapat diakses tanpa memerlukan server.
 
-### Statistik & Laporan
-- **Statistik** — Grafik Chart.js: tren mingguan, distribusi kategori pengeluaran
-- **Export PDF** — Master Report lengkap via jsPDF (saldo, ringkasan, detail per anggota)
-- **Export CSV** — Data kas mingguan & iuran dalam format spreadsheet
-- **Laporan Grup** — Copy-paste text summary siap kirim ke grup WhatsApp
+### ✨ Fitur Utama
 
-### Gamifikasi (RPG System)
-- **XP & Level** — Dapatkan XP dari aktivitas (catat transaksi, backup, export)
-- **Streak** — Login harian berturut-turut meningkatkan streak
-- **Achievements** — 10+ achievement seperti "Bendahara Teladan", "Sigma Grindset", "Full Lunas"
-- **Quest** — Tantangan harian & mingguan dengan reward XP
+#### 💰 Manajemen Keuangan
+- **Dashboard Cerdas**: Ringkasan saldo real-time, grafik pemasukan vs pengeluaran, dan tips keuangan harian.
+- **Pelacakan Mingguan**: Pantau pembayaran siswa per minggu dengan mudah.
+- **Iuran Khusus**: Buat iuran kustom dengan tenggat waktu dan pantau progres pengumpulan.
+- **Sistem Cicilan**: Siswa dapat mencicil pembayaran; sistem otomatis menandai lunas saat target tercapai.
+- **Riwayat Transaksi**: Catat setiap pengeluaran/pemasukan dengan kategori, filter, dan pencarian instan.
+- **Portofolio Anggota**: Detail riwayat pembayaran lengkap untuk setiap siswa.
 
-### Keamanan & Utilitas
-- **PIN Lock** — Kunci aplikasi dengan PIN 4-6 digit
-- **Backup & Restore** — Export/import seluruh data sebagai file JSON
-- **Auto-Save** — Data tersimpan otomatis ke localStorage (debounced 1 detik)
-- **Sound Effects** — Efek suara interaktif (bisa di-toggle on/off)
-- **First Setup Wizard** — Panduan setup awal: nama kelas, nominal kas, daftar anggota
+#### 📊 Laporan & Analistik
+- **Statistik Visual**: Grafik cantik (Chart.js) yang menunjukkan tren mingguan dan distribusi pengeluaran.
+- **Ekspor PDF**: Hasilkan Laporan Master profesional (saldo, ringkasan, detail anggota).
+- **Ekspor CSV**: Ekspor data ke format spreadsheet untuk pengolahan lebih lanjut.
+- **Ringkasan WhatsApp**: Salin ringkasan teks siap kirim ke grup kelas hanya dengan satu klik.
 
----
+#### 🎮 Gamifikasi (Sistem RPG)
+- **XP & Level**: Dapatkan XP untuk setiap aktivitas (mencatat transaksi, backup, ekspor).
+- **Streak Login**: Bangun streak harian untuk meningkatkan status Anda.
+- **Achievement**: Buka 10+ lencana seperti "Bendahara Teladan", "Sigma Grindset", dan "Pelunas Hutang".
+- **Quest**: Selesaikan tantangan harian dan mingguan untuk naik level lebih cepat.
 
-## Tech Stack
-
-| Layer | Teknologi |
-|-------|-----------|
-| Framework | React 19.2 (CDN + Vite) |
-| Build Tool | Vite 8.0 beta + Rolldown |
-| Styling | Tailwind CSS 4.2 |
-| Icons | Lucide React |
-| Charts | Chart.js (CDN) |
-| PDF | jsPDF + jsPDF-AutoTable |
-| Animations | CSS Keyframes + Canvas Confetti |
-| Storage | localStorage (offline-first, no database) |
+#### 🔒 Keamanan & Utilitas
+- **Proteksi PIN**: Amankan aplikasi Anda dengan PIN 4-6 digit.
+- **Backup & Restore**: Fungsi ekspor/impor JSON penuh untuk keamanan data.
+- **Simpan Otomatis**: Penyimpanan data otomatis ke `localStorage` (debounce 1 detik).
+- **UX Imersif**: Efek suara interaktif dan umpan balik haptic.
 
 ---
 
-## Struktur Proyek
+## 🛠 Tech Stack
 
-```
-kas-kelas/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── App.jsx                  # Komponen utama (~4800 baris)
-│   ├── App.css                  # Global styles
-│   ├── main.jsx                 # Entry point
-│   ├── components/
-│   │   ├── FirstSetup.jsx       # Wizard setup awal
-│   │   └── ui/                  # Komponen UI reusable
-│   │       ├── AnimatedNumber.jsx
-│   │       ├── AnimatedNumberWithTrend.jsx
-│   │       ├── ErrorBoundary.jsx
-│   │       ├── IconDisplay.jsx
-│   │       ├── Icons.jsx        # Custom SVG icons
-│   │       ├── LucideIcon.jsx
-│   │       └── Toast.jsx
-│   ├── features/
-│   │   ├── dashboard/           # Tab Dashboard
-│   │   ├── cek-bayar/           # Tab Cek Bayar (Kas & Iuran)
-│   │   ├── iuran/               # Tab Iuran Khusus
-│   │   ├── cicilan/             # Tab Cicilan
-│   │   ├── transaksi/           # Tab Transaksi
-│   │   ├── per-anggota/         # Tab Per Anggota
-│   │   ├── statistik/           # Tab Statistik & Grafik
-│   │   ├── quest/               # Tab Quest & Achievement
-│   │   └── pengaturan/          # Tab Pengaturan
-│   ├── hooks/
-│   │   ├── useAutoSave.js       # Debounced localStorage save
-│   │   ├── useFinanceCalculations.js
-│   │   ├── useLocalStorage.js
-│   │   └── useToast.js
-│   ├── utils/
-│   │   ├── calculations.js      # Week & date calculations
-│   │   ├── formatters.js        # Currency & date formatting
-│   │   └── haptics.js           # Vibration API
-│   ├── constants/
-│   │   ├── config.js            # App configuration defaults
-│   │   ├── members.js           # Default member data
-│   │   └── tips.js              # Daily tips content
-│   └── styles/
-│       ├── theme.css            # Color tokens & glassmorphism
-│       ├── components.css       # Component styles
-│       └── animations.css       # All @keyframes
-├── index.html                   # HTML entry + CDN scripts
-├── vite.config.js
-├── package.json
-└── eslint.config.js
-```
+| Layer | Technology |
+|-------|------------|
+| **Frontend** | React 19.2 (Vite) |
+| **Styling** | Tailwind CSS 4.2 |
+| **Icons** | Lucide React |
+| **Charts** | Chart.js |
+| **PDF Engine** | jsPDF + jsPDF-AutoTable |
+| **Animations** | CSS Keyframes + Canvas Confetti |
+| **Storage** | localStorage (Offline-first) |
 
 ---
 
-## Quick Start
+## 🚀 Getting Started / Memulai
 
 ### Prerequisites
 - Node.js 18+
 - npm 9+
 
-### Install & Run
+### Installation
 
 ```bash
-# Clone repository
+# Clone the repository
 git clone https://github.com/Riz6ix/KasKelas-WebApp.git
+
+# Enter the directory
 cd KasKelas-WebApp
 
 # Install dependencies
 npm install
 
-# Jalankan dev server
+# Start development server
 npm run dev
 ```
 
-Buka `http://localhost:5173` di browser.
-
-### Build untuk Production
-
-```bash
-npm run build
-```
-
-Output di folder `dist/` — siap deploy ke Vercel, Netlify, atau hosting statis lainnya.
+Visit `http://localhost:5173` in your browser.
 
 ---
 
-## Deploy ke Vercel
+## 🛣️ Roadmap
 
-1. Push ke GitHub
-2. Buka [vercel.com](https://vercel.com) → New Project → Import dari GitHub
-3. Pilih repository `KasKelas-WebApp`
-4. Framework Preset: **Vite**
-5. Build Command: `npm run build`
-6. Output Directory: `dist`
-7. Klik **Deploy**
-
-Vercel akan otomatis build & deploy setiap push ke `main`.
+- [ ] **Multi-Class Support**: Manage multiple class databases in one app.
+- [ ] **Cloud Sync**: Optional Supabase/Firebase integration for real-time collaboration.
+- [ ] **Dark/Light Mode**: Full theme customization options.
+- [ ] **Mobile App (PWA)**: Enhanced service workers for better offline experience.
+- [ ] **Data Encryption**: End-to-end encryption for sensitive local data.
 
 ---
 
-## Data & Privasi
+## 🛡️ Data & Privacy
 
-- **Semua data tersimpan di localStorage browser** — tidak ada database eksternal
-- **Tidak ada data yang dikirim ke server** — 100% offline-capable
-- **Backup manual** — Export ke file JSON untuk backup, import untuk restore
-- **PIN protection** — Opsional, PIN disimpan di localStorage (plaintext)
-
-> **Penting:** Jika browser cache dihapus, data akan hilang. Rutin backup via menu Pengaturan.
+- **100% Client-Side**: All data is stored in your browser's `localStorage`. No data ever leaves your device.
+- **Manual Backups**: We highly recommend using the **Backup** feature regularly to save your data as a JSON file.
+- **Encryption**: PIN protection is local; ensure you don't clear your browser cache unless you have a backup.
 
 ---
 
-## Keyboard Shortcuts
+## 🤝 Contributing
 
-| Shortcut | Aksi |
-|----------|------|
-| Tab navigation | Swipe atau klik tab di bottom nav |
+Contributions are welcome! Please check the [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
----
+## 📄 License
 
-## Browser Support
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
 
-| Browser | Status |
-|---------|--------|
-| Chrome 90+ | ✅ Full support |
-| Firefox 90+ | ✅ Full support |
-| Safari 15+ | ✅ Full support |
-| Edge 90+ | ✅ Full support |
-| Mobile Chrome/Safari | ✅ Optimized (responsive) |
+## 👨‍💻 Author
+
+**Muhamad Rizki Setiawan**
+- GitHub: [@Riz6ix](https://github.com/Riz6ix)
+- Role: Class Treasurer XII-F5
 
 ---
 
-## Contributing
+<p align="center">
+  <i>Developed with ❤️ for a better class management experience.</i>
+</p>
 
-Project ini dibuat untuk kebutuhan kelas XII-F5. Jika ingin kontribusi:
-
-1. Fork repository
-2. Buat branch fitur: `git checkout -b fitur-baru`
-3. Commit perubahan: `git commit -m "Tambah fitur baru"`
-4. Push: `git push origin fitur-baru`
-5. Buka Pull Request
-
----
-
-## Credits
-
-Dibuat oleh **Muhamad Rizki Setiawan** ([@Riz6ix](https://github.com/Riz6ix))
-Kelas XII-F5 — Bendahara Kelas
-
----
-
-## License
-
-MIT License — bebas digunakan, dimodifikasi, dan didistribusikan.
+<!-- SEO Tags -->
+<!-- Keywords: Kas Kelas, Management App, React Finance, Class Treasurer App, Bendahara Kelas, Aplikasi Kas, WebApp Offline-First, Gamified Finance -->
