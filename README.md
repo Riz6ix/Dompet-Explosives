@@ -2,7 +2,7 @@
   <img src="public/favicon.svg" width="120" alt="KasKelas Logo" />
 </p>
 
-<h1 align="center">KasKelas XII-F5</h1>
+<h1 align="center">Dompet Explosives 💣</h1>
 
 <p align="center">
   <strong>A Modern Class Cash Management WebApp — Smart, Fast, and Fun</strong>
