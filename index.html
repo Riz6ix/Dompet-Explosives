@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KasKelas XII-F5</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Lucide Icons CDN (dipakai oleh LucideIcon component) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- jsPDF + AutoTable (dipakai untuk export PDF) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- Canvas Confetti (dipakai untuk efek milestone saldo) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <!-- Chart.js (dipakai oleh StatistikTab untuk grafik) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Splash Screen Styles (inline — renders instantly before JS loads) -->
+    <style>
+      #splash-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+      }
+      #splash-screen.hide {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      .splash-logo {
+        width: 72px;
+        height: 72px;
+        animation: splashFloat 2s ease-in-out infinite;
+        filter: drop-shadow(0 0 20px rgba(249, 115, 22, 0.5));
+      }
+      .splash-title {
+        margin-top: 20px;
+        font-family: system-ui, -apple-system, sans-serif;
+        font-size: 20px;
+        font-weight: 800;
+        color: white;
+        letter-spacing: 0.5px;
+      }
+      .splash-subtitle {
+        margin-top: 6px;
+        font-family: system-ui, -apple-system, sans-serif;
+        font-size: 12px;
+        color: rgba(148, 163, 184, 0.8);
+        font-weight: 500;
+      }
+      .splash-loader {
+        margin-top: 32px;
+        width: 140px;
+        height: 4px;
+        border-radius: 99px;
+        background: rgba(255, 255, 255, 0.1);
+        overflow: hidden;
+      }
+      .splash-loader-bar {
+        height: 100%;
+        border-radius: 99px;
+        background: linear-gradient(90deg, #f97316, #fde047, #f97316);
+        background-size: 200% 100%;
+        animation: splashLoad 1.5s ease-in-out infinite, splashShimmer 1.2s linear infinite;
+      }
+      .splash-dots {
+        margin-top: 12px;
+        display: flex;
+        gap: 6px;
+      }
+      .splash-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgba(249, 115, 22, 0.6);
+        animation: splashDot 1.2s ease-in-out infinite;
+      }
+      .splash-dot:nth-child(2) { animation-delay: 0.2s; }
+      .splash-dot:nth-child(3) { animation-delay: 0.4s; }
+
+      @keyframes splashFloat {
+        0%, 100% { transform: translateY(0) scale(1); }
+        50% { transform: translateY(-8px) scale(1.03); }
+      }
+      @keyframes splashLoad {
+        0% { width: 10%; }
+        50% { width: 70%; }
+        100% { width: 95%; }
+      }
+      @keyframes splashShimmer {
+        0% { background-position: -200% center; }
+        100% { background-position: 200% center; }
+      }
+      @keyframes splashDot {
+        0%, 100% { opacity: 0.3; transform: scale(0.8); }
+        50% { opacity: 1; transform: scale(1.2); }
+      }
+    </style>
+  </head>
+  <body class="dynamic-bg">
+    <!-- Splash Loading Screen (pure HTML, instant render) -->
+    <div id="splash-screen">
+      <svg class="splash-logo" viewBox="0 0 100 100" fill="none">
+        <path d="M50 5 L60 30 L95 25 L75 50 L90 85 L50 70 L10 85 L25 50 L5 25 L40 30 Z" fill="#ef4444"/>
+        <path d="M50 15 L58 35 L85 30 L70 50 L80 75 L50 65 L20 75 L30 50 L15 30 L42 35 Z" fill="#f97316"/>
+        <path d="M50 25 L55 40 L70 38 L60 50 L65 65 L50 60 L35 65 L40 50 L30 38 L45 40 Z" fill="#fde047"/>
+      </svg>
+      <div class="splash-title">Dompet Explosives</div>
+      <div class="splash-subtitle">Memuat data kelas...</div>
+      <div class="splash-loader">
+        <div class="splash-loader-bar"></div>
+      </div>
+      <div class="splash-dots">
+        <div class="splash-dot"></div>
+        <div class="splash-dot"></div>
+        <div class="splash-dot"></div>
+      </div>
+    </div>
+
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+
+    <!-- Splash dismiss: React calls window.appReady() when data loaded -->
+    <script>
+      window.appReady = function () {
+        var splash = document.getElementById('splash-screen');
+        if (splash) {
+          splash.classList.add('hide');
+          setTimeout(function () { splash.remove(); }, 600);
+        }
+      };
+    </script>
+  </body>
+</html>
