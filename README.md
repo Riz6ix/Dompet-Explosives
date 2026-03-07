@@ -165,7 +165,7 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 
 ## 👨‍💻 Author
 
-**Muhamad Rizki Setiawan**
+**Iky Setiawan**
 - GitHub: [@Riz6ix](https://github.com/Riz6ix)
 - Role: Class Treasurer XII-F5
 
