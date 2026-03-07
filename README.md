@@ -3,11 +3,12 @@
 </p>
 
 <h1 align="center">Dompet Explosives 💣</h1>
+<h3 align="center">Aplikasi Manajemen Kas Kelas Modern</h3>
 
 <p align="center">
   <strong>A Modern Class Cash Management WebApp — Smart, Fast, and Fun</strong>
   <br />
-  <i>Aplikasi Manajemen Kas Kelas Modern — Cerdas, Cepat, dan Menyenangkan</i>
+  <i>Cerdas, Cepat, dan Menyenangkan</i>
 </p>
 
 <p align="center">
