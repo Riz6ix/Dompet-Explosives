@@ -659,21 +659,17 @@ const CekBayarTab = ({
                           <div className="flex-1 min-w-0">
                             <div className="font-semibold text-sm truncate text-gray-800 flex items-center gap-1">
                               {member.nama}
-                              {/* Deposit Badge */}
-                              {Object.keys(disabledWeeks).some(
-                                (w) =>
-                                  disabledWeeks[w] &&
-                                  kasMingguan[`${w}-${member.no}`],
-                              ) && (
+                              {/* Deposit Badge — hanya tampil di minggu target carry-forward */}
+                              {carryInfo && (
                                 <div
                                   className="bg-yellow-100 text-yellow-700 px-1.5 py-0.5 rounded text-[10px] font-bold flex items-center gap-1 border border-yellow-200"
-                                  title="Memiliki Deposit di Minggu Libur"
+                                  title={`Lunas dari deposit Minggu ${carryInfo.fromWeek}`}
                                 >
                                   <LucideIcon
                                     name="PiggyBank"
                                     size={10}
                                   />
-                                  <span>Deposit</span>
+                                  <span>Deposit M{carryInfo.fromWeek}</span>
                                 </div>
                               )}
                             </div>
