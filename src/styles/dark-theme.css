@@ -83,14 +83,14 @@
 .text-gray-700 { color: #c8cdd8 !important; }
 .text-gray-600 { color: #b0b8c8 !important; }
 .text-gray-500 { color: #8892a5 !important; }
-.text-gray-400 { color: #6b7588 !important; }
+.text-gray-400 { color: #7d8799 !important; }
 .text-gray-300 { color: #555f72 !important; }
 
 /* Slate text scale */
 .text-slate-800 { color: #e4e7ed !important; }
 .text-slate-700 { color: #c8cdd8 !important; }
 .text-slate-500 { color: #8892a5 !important; }
-.text-slate-400 { color: #7a849a !important; }
+.text-slate-400 { color: #8490a6 !important; }
 .text-slate-300 { color: #6b7588 !important; }
 
 /* ── Border Overrides ── */
@@ -255,4 +255,9 @@ select option {
 /* ── Horizontal rule / separators ── */
 hr {
   border-color: #2a3246 !important;
+}
+
+/* ── FirstSetup overlay background ── */
+.setup-overlay-bg {
+  background: radial-gradient(ellipse at 30% 20%, rgba(26, 20, 50, 0.95) 0%, rgba(15, 23, 42, 0.9) 40%, rgba(15, 18, 30, 0.97) 100%) !important;
 }
