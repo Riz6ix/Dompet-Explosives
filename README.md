@@ -15,7 +15,13 @@
 <br/>
 
 <p align="center">
-  <a href="https://kaskelasxiif5.vercel.app"><img src="https://img.shields.io/badge/%F0%9F%9A%80_Coba_Sekarang-kaskelasxiif5.vercel.app-F97316?style=for-the-badge" alt="Live Demo" /></a>
+  <a href="https://kaskelasxiif5.vercel.app">
+    <img src="https://img.shields.io/badge/🚀_Coba_Sekarang-Live_Demo-F97316?style=for-the-badge&logoColor=white" alt="Live Demo" />
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://github.com/Riz6ix/Dompet-Explosives/issues">
+    <img src="https://img.shields.io/badge/💬_Feedback-Report_Bug-6366F1?style=for-the-badge&logoColor=white" alt="Report Bug" />
+  </a>
 </p>
 
 <p align="center">
@@ -32,18 +38,36 @@
 
 ## 📑 Daftar Isi
 
-> Klik buat loncat ke section yang kamu mau.
+<table>
+  <tr>
+    <td>
 
-- [Apa Sih Ini?](#-apa-sih-ini)
-- [Kenapa Harus Ini?](#-kenapa-harus-ini)
-- [Fitur Lengkap](#-fitur-lengkap)
-- [Tech Stack](#-tech-stack)
-- [Quick Start](#-quick-start)
-- [Struktur Project](#-struktur-project)
-- [Data & Privacy](#-data--privacy)
-- [Roadmap](#-roadmap)
-- [Contributing](#-contributing)
-- [License & Author](#-license--author)
+🤔 [Apa Sih Ini?](#-apa-sih-ini)
+
+💡 [Kenapa Harus Ini?](#-kenapa-harus-ini)
+
+✨ [Fitur Lengkap](#-fitur-lengkap)
+
+🛠 [Tech Stack](#-tech-stack)
+
+🚀 [Quick Start](#-quick-start)
+
+  </td>
+    <td>
+
+📁 [Struktur Project](#-struktur-project)
+
+🔐 [Data & Privacy](#-data--privacy)
+
+🗺 [Roadmap](#-roadmap)
+
+🤝 [Contributing](#-contributing)
+
+📄 [License & Author](#-license--author)
+
+  </td>
+  </tr>
+</table>
 
 ---
 
