@@ -460,73 +460,82 @@ const PerAnggotaTab = ({
                       <React.Fragment key={item.week}>
                         <div
                           id={`kas-${item.week}-${memberNo}`}
-                          className={`flex justify-between items-center p-3 rounded-lg transition-all ${
+                          className={`p-3 rounded-lg transition-all ${
                             item.status === "cicil"
                               ? "bg-yellow-50 border border-yellow-200"
-                              : "bg-gray-50 border border-gray-200"
+                              : item.status === "deposit"
+                                ? "bg-amber-50 border border-amber-200"
+                                : "bg-gray-50 border border-gray-200"
                           }`}
                         >
-                          <div className="flex-1">
-                            <div className="font-medium text-sm text-gray-800">
+                          <div className="flex justify-between items-center mb-2">
+                            <div className="font-semibold text-sm text-gray-800">
                               Minggu {item.week}
                             </div>
-                            {item.cicilan > 0 && (
-                              <div className="mt-2">
-                                <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                                  <div
-                                    className="h-full bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full"
-                                    style={{ width: `${Math.min(100, Math.round(item.cicilan / KAS_MINGGUAN_AMOUNT * 100))}%` }}
-                                  />
-                                </div>
-                                <div className="flex justify-between mt-1">
-                                  <span className="text-[10px] text-gray-500">Terbayar: Rp {item.cicilan.toLocaleString("id-ID")}</span>
-                                  <span className="text-[10px] text-orange-600 font-semibold">Sisa: Rp {item.sisa.toLocaleString("id-ID")}</span>
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                          <div className="flex items-center gap-2">
                             <span
-                              className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                                item.status === "cicil"
-                                  ? "bg-yellow-500 text-white"
+                              className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
+                                item.status === "lunas" ? "bg-green-500 text-white"
+                                  : item.status === "deposit" ? "bg-amber-500 text-white"
+                                  : item.status === "cicil" ? "bg-yellow-500 text-white"
                                   : "bg-gray-400 text-white"
                               }`}
                             >
-                              {item.label}
+                              {item.status === "deposit" ? "💰 Deposit" : item.label}
                             </span>
-                            {/* TOMBOL CICIL */}
-                            <button
-                              onClick={() => {
-                                const qKey = `kas-${item.week}-${memberNo}`;
-                                if (quickCicilOpen === qKey) {
-                                  closeQuickCicil();
-                                } else {
-                                  openQuickCicil(qKey);
-                                }
-                              }}
-                              className="px-3 py-1 bg-orange-400 hover:bg-orange-500 text-white text-xs font-semibold rounded-full transition-colors flex items-center gap-1"
-                              title="Quick Cicil"
-                            >
-                              <LucideIcon name="Banknote" size={12} />
-                              Cicil
-                            </button>
-                            {/* TOMBOL LUNASIN */}
-                            <button
-                              onClick={() =>
-                                handleToggleConfirm(
-                                  "kas",
-                                  null,
-                                  item.week,
-                                  memberNo,
-                                )
-                              }
-                              className="px-3 py-1 bg-green-500 hover:bg-green-600 text-white text-xs font-semibold rounded-full transition-colors"
-                              title="Tandai Lunas"
-                            >
-                              ✓ Lunasin
-                            </button>
                           </div>
+                          {item.status === "deposit" && item.label && (
+                            <p className="text-[10px] text-amber-600 mb-2">{item.label}</p>
+                          )}
+                          {item.cicilan > 0 && (
+                            <div className="mb-2">
+                              <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                <div
+                                  className="h-full bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full"
+                                  style={{ width: `${Math.min(100, Math.round(item.cicilan / KAS_MINGGUAN_AMOUNT * 100))}%` }}
+                                />
+                              </div>
+                              <div className="flex justify-between mt-1">
+                                <span className="text-[10px] text-gray-500">Terbayar: Rp {item.cicilan.toLocaleString("id-ID")}</span>
+                                <span className="text-[10px] text-orange-600 font-semibold">Sisa: Rp {item.sisa.toLocaleString("id-ID")}</span>
+                              </div>
+                            </div>
+                          )}
+                          {item.status !== "lunas" && item.status !== "deposit" && (
+                            <div className="grid grid-cols-3 gap-1.5">
+                              <span className="flex items-center justify-center gap-1 py-1.5 bg-gray-400 text-white text-[11px] font-semibold rounded-lg">
+                                ○ Belum
+                              </span>
+                              <button
+                                onClick={() => {
+                                  const qKey = `kas-${item.week}-${memberNo}`;
+                                  if (quickCicilOpen === qKey) {
+                                    closeQuickCicil();
+                                  } else {
+                                    openQuickCicil(qKey);
+                                  }
+                                }}
+                                className="flex items-center justify-center gap-1 py-1.5 bg-orange-400 hover:bg-orange-500 text-white text-[11px] font-semibold rounded-lg transition-colors"
+                                title="Quick Cicil"
+                              >
+                                <LucideIcon name="Banknote" size={11} />
+                                Cicil
+                              </button>
+                              <button
+                                onClick={() =>
+                                  handleToggleConfirm(
+                                    "kas",
+                                    null,
+                                    item.week,
+                                    memberNo,
+                                  )
+                                }
+                                className="flex items-center justify-center gap-1 py-1.5 bg-green-500 hover:bg-green-600 text-white text-[11px] font-semibold rounded-lg transition-colors"
+                                title="Tandai Lunas"
+                              >
+                                ✓ Lunasin
+                              </button>
+                            </div>
+                          )}
                         </div>
                         {/* Quick Cicil Inline Form - kas */}
                         {quickCicilOpen === `kas-${item.week}-${memberNo}` && (
@@ -647,76 +656,79 @@ const PerAnggotaTab = ({
                         <React.Fragment key={item.iuran.id}>
                           <div
                             id={`iuran-${item.iuran.id}-${memberNo}`}
-                            className={`flex justify-between items-center p-3 rounded-lg transition-all ${
+                            className={`p-3 rounded-lg transition-all ${
                               item.status === "cicil"
                                 ? "bg-yellow-50 border border-yellow-200"
                                 : "bg-gray-50 border border-gray-200"
                             }`}
                           >
-                            <div className="flex-1">
-                              <div className="font-medium text-sm text-gray-800">
+                            <div className="flex justify-between items-center mb-1">
+                              <div className="font-semibold text-sm text-gray-800">
                                 {item.iuran.name}
                               </div>
-                              <div className="text-xs text-gray-500">
-                                Rp {item.iuran.amount.toLocaleString("id-ID")}
-                              </div>
-                              {item.cicilan > 0 && (
-                                <div className="mt-2">
-                                  <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                                    <div
-                                      className="h-full bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full"
-                                      style={{ width: `${Math.min(100, Math.round(item.cicilan / item.iuran.amount * 100))}%` }}
-                                    />
-                                  </div>
-                                  <div className="flex justify-between mt-1">
-                                    <span className="text-[10px] text-gray-500">Terbayar: Rp {item.cicilan.toLocaleString("id-ID")}</span>
-                                    <span className="text-[10px] text-orange-600 font-semibold">Sisa: Rp {item.sisa.toLocaleString("id-ID")}</span>
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                            <div className="flex items-center gap-2">
                               <span
-                                className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                                  item.status === "cicil"
-                                    ? "bg-yellow-500 text-white"
+                                className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
+                                  item.status === "lunas" ? "bg-green-500 text-white"
+                                    : item.status === "cicil" ? "bg-yellow-500 text-white"
                                     : "bg-gray-400 text-white"
                                 }`}
                               >
                                 {item.label}
                               </span>
-                              {/* TOMBOL CICIL */}
-                              <button
-                                onClick={() => {
-                                  const qKey = `iuran-${item.iuran.id}-${memberNo}`;
-                                  if (quickCicilOpen === qKey) {
-                                    closeQuickCicil();
-                                  } else {
-                                    openQuickCicil(qKey);
-                                  }
-                                }}
-                                className="px-3 py-1 bg-orange-400 hover:bg-orange-500 text-white text-xs font-semibold rounded-full transition-colors flex items-center gap-1"
-                                title="Quick Cicil"
-                              >
-                                <LucideIcon name="Banknote" size={12} />
-                                Cicil
-                              </button>
-                              {/* TOMBOL LUNASIN */}
-                              <button
-                                onClick={() =>
-                                  handleToggleConfirm(
-                                    "iuran",
-                                    item.iuran.id,
-                                    null,
-                                    memberNo,
-                                  )
-                                }
-                                className="px-3 py-1 bg-green-500 hover:bg-green-600 text-white text-xs font-semibold rounded-full transition-colors"
-                                title="Tandai Lunas"
-                              >
-                                ✓ Lunasin
-                              </button>
                             </div>
+                            <div className="text-xs text-gray-500 mb-2">
+                              Rp {item.iuran.amount.toLocaleString("id-ID")}
+                            </div>
+                            {item.cicilan > 0 && (
+                              <div className="mb-2">
+                                <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                  <div
+                                    className="h-full bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full"
+                                    style={{ width: `${Math.min(100, Math.round(item.cicilan / item.iuran.amount * 100))}%` }}
+                                  />
+                                </div>
+                                <div className="flex justify-between mt-1">
+                                  <span className="text-[10px] text-gray-500">Terbayar: Rp {item.cicilan.toLocaleString("id-ID")}</span>
+                                  <span className="text-[10px] text-orange-600 font-semibold">Sisa: Rp {item.sisa.toLocaleString("id-ID")}</span>
+                                </div>
+                              </div>
+                            )}
+                            {item.status !== "lunas" && (
+                              <div className="grid grid-cols-3 gap-1.5">
+                                <span className="flex items-center justify-center gap-1 py-1.5 bg-gray-400 text-white text-[11px] font-semibold rounded-lg">
+                                  ○ Belum
+                                </span>
+                                <button
+                                  onClick={() => {
+                                    const qKey = `iuran-${item.iuran.id}-${memberNo}`;
+                                    if (quickCicilOpen === qKey) {
+                                      closeQuickCicil();
+                                    } else {
+                                      openQuickCicil(qKey);
+                                    }
+                                  }}
+                                  className="flex items-center justify-center gap-1 py-1.5 bg-orange-400 hover:bg-orange-500 text-white text-[11px] font-semibold rounded-lg transition-colors"
+                                  title="Quick Cicil"
+                                >
+                                  <LucideIcon name="Banknote" size={11} />
+                                  Cicil
+                                </button>
+                                <button
+                                  onClick={() =>
+                                    handleToggleConfirm(
+                                      "iuran",
+                                      item.iuran.id,
+                                      null,
+                                      memberNo,
+                                    )
+                                  }
+                                  className="flex items-center justify-center gap-1 py-1.5 bg-green-500 hover:bg-green-600 text-white text-[11px] font-semibold rounded-lg transition-colors"
+                                  title="Tandai Lunas"
+                                >
+                                  ✓ Lunasin
+                                </button>
+                              </div>
+                            )}
                           </div>
                           {/* Quick Cicil Inline Form - iuran */}
                           {quickCicilOpen ===

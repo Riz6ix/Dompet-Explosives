@@ -286,6 +286,7 @@ const FirstSetup = ({ onComplete }) => {
   const [newMemberName, setNewMemberName] = React.useState("");
   const [editingIdx, setEditingIdx] = React.useState(null);
   const [editingName, setEditingName] = React.useState("");
+  const singleInputRef = React.useRef(null);
 
   const [skipPin, setSkipPin] = React.useState(false);
   const [pinError, setPinError] = React.useState("");
@@ -348,6 +349,8 @@ const FirstSetup = ({ onComplete }) => {
     if (membersList.some((m) => m.toUpperCase() === name)) return;
     setMembersList((prev) => [...prev, name]);
     setNewMemberName("");
+    // Refocus input so keyboard stays open on mobile
+    setTimeout(() => singleInputRef.current?.focus(), 50);
   };
 
   const removeMember = (idx) => {
@@ -589,11 +592,14 @@ const FirstSetup = ({ onComplete }) => {
         {!showBulkMode && (
           <div className="flex gap-2 fade-in-up">
             <input
+              ref={singleInputRef}
               value={newMemberName}
               onChange={(e) => setNewMemberName(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addSingleMember(); } }}
               placeholder="Ketik nama siswa..."
               autoFocus
+              inputMode="text"
+              enterKeyHint="done"
               className="setup-input flex-1 rounded-xl border-2 border-gray-200 bg-gray-50 py-2.5 px-3.5 text-sm text-gray-800 font-medium transition-all duration-200 placeholder:text-gray-300"
             />
             <button
