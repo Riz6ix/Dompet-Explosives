@@ -30,14 +30,14 @@
 ## 🌐 English Version
 
 ### 🎯 About the Project
-**KasKelas** is a powerful yet lightweight web application designed specifically for class treasurers. It simplifies the tedious task of managing weekly dues, special contributions, installments, and expenses with a modern, gamified interface. Built with an **offline-first** approach, your data stays private and accessible without needing a server.
+**KasKelas** is a powerful yet lightweight web application designed specifically for class treasurers. It simplifies the tedious task of managing weekly dues, contributions, installments, and expenses with a modern, gamified interface. Built with an **offline-first** approach, your data stays private and accessible without needing a server.
 
 ### ✨ Key Features
 
 #### 💰 Finance Management
 - **Smart Dashboard**: Real-time balance summaries, income vs. expense charts, and daily financial tips.
 - **Weekly Tracking**: Easily monitor student payments per week with simple status toggles.
-- **Special Dues**: Create custom contributions with deadlines and track collection progress.
+- **Contributions**: Create custom contributions with deadlines and track collection progress.
 - **Installment System**: Students can pay in installments; the system automatically marks them as paid once the target is met.
 - **Transaction History**: Log every penny with categories, filters, and instant search.
 - **Member Portfolios**: Detailed payment history for every individual student.
@@ -66,14 +66,14 @@
 ## 🇮🇩 Versi Bahasa Indonesia
 
 ### 🎯 Tentang Proyek
-**KasKelas** adalah web aplikasi yang ringan namun bertenaga, dirancang khusus untuk bendahara kelas. Aplikasi ini menyederhanakan tugas membosankan dalam mengelola kas mingguan, iuran khusus, cicilan, dan pengeluaran dengan antarmuka modern yang tergamifikasi. Dibuat dengan pendekatan **offline-first**, data Anda tetap privat dan dapat diakses tanpa memerlukan server.
+**KasKelas** adalah web aplikasi yang ringan namun bertenaga, dirancang khusus untuk bendahara kelas. Aplikasi ini menyederhanakan tugas membosankan dalam mengelola kas mingguan, iuran, cicilan, dan pengeluaran dengan antarmuka modern yang tergamifikasi. Dibuat dengan pendekatan **offline-first**, data Anda tetap privat dan dapat diakses tanpa memerlukan server.
 
 ### ✨ Fitur Utama
 
 #### 💰 Manajemen Keuangan
 - **Dashboard Cerdas**: Ringkasan saldo real-time, grafik pemasukan vs pengeluaran, dan tips keuangan harian.
 - **Pelacakan Mingguan**: Pantau pembayaran siswa per minggu dengan mudah.
-- **Iuran Khusus**: Buat iuran kustom dengan tenggat waktu dan pantau progres pengumpulan.
+- **Iuran**: Buat iuran kustom dengan tenggat waktu dan pantau progres pengumpulan.
 - **Sistem Cicilan**: Siswa dapat mencicil pembayaran; sistem otomatis menandai lunas saat target tercapai.
 - **Riwayat Transaksi**: Catat setiap pengeluaran/pemasukan dengan kategori, filter, dan pencarian instan.
 - **Portofolio Anggota**: Detail riwayat pembayaran lengkap untuk setiap siswa.

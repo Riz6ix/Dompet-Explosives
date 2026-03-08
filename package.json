@@ -2,7 +2,7 @@
   "name": "kas-kelas",
   "private": true,
   "version": "1.0.0",
-  "description": "A modern, intelligent, and offline-first class finance management web application built with React, Vite, and Tailwind CSS. Features include weekly cash tracking, special dues, installments, and gamified XP systems.",
+  "description": "A modern, intelligent, and offline-first class finance management web application built with React, Vite, and Tailwind CSS. Features include weekly cash tracking, contributions, installments, and gamified XP systems.",
   "type": "module",
   "keywords": [
     "kas-kelas",
