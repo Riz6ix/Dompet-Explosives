@@ -1008,15 +1008,23 @@ const App = () => {
           const key = `${w}-${member.no}`;
           if (kasMingguan[key] !== true) continue; // Hanya yang sudah bayar (deposit)
 
-          // Cari minggu aktif berikutnya yang BELUM lunas
+          // Cari minggu aktif PERTAMA setelah minggu libur ini (tepat berikutnya)
           let targetWeek = null;
           for (let nw = w + 1; nw <= currentWeek; nw++) {
             if (disabledWeeks[nw]) continue; // Skip minggu libur juga
-            const nextKey = `${nw}-${member.no}`;
-            if (kasMingguan[nextKey] === true) continue; // Sudah lunas sendiri
-            if (carryMap[nextKey]) continue; // Sudah di-carry dari deposit lain
+            // Target = minggu aktif pertama setelah libur, titik.
+            // Kalau sudah lunas sendiri atau sudah di-carry lain, deposit ini "nganggur"
             targetWeek = nw;
             break;
+          }
+
+          // Hanya carry kalau target belum lunas sendiri & belum di-carry deposit lain
+          if (targetWeek) {
+            const targetKey = `${targetWeek}-${member.no}`;
+            if (kasMingguan[targetKey] === true || carryMap[targetKey]) {
+              // Target sudah lunas sendiri atau sudah di-carry — deposit nganggur
+              targetWeek = null;
+            }
           }
 
           if (targetWeek) {
