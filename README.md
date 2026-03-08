@@ -10,6 +10,8 @@
 
 <p align="center">
   <em>Web app buat bendahara kelas yang capek ngitung manual.<br/>Setup 2 menit, langsung jalan. Data aman di browser kamu.</em>
+  <br/><br/>
+  <img src="https://img.shields.io/badge/📱_Designed_for-Mobile_First-8B5CF6?style=flat-square" alt="Mobile First" />
 </p>
 
 <br/>
@@ -88,6 +90,8 @@ Yang bikin beda? Ada sistem **RPG** 🎮 — setiap aksi dapet XP, naik level, u
 ```
 
 > **💡 Satu kalimat:** Bendahara kelas tapi make it ✨ fun ✨
+
+> **📱 Note:** App ini didesain **mobile-first** — tampilannya paling optimal di HP. Buka di desktop juga bisa, tapi experience terbaiknya di layar kecil.
 
 ---
 
