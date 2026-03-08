@@ -261,3 +261,115 @@ hr {
 .setup-overlay-bg {
   background: radial-gradient(ellipse at 30% 20%, rgba(26, 20, 50, 0.95) 0%, rgba(15, 23, 42, 0.9) 40%, rgba(15, 18, 30, 0.97) 100%) !important;
 }
+
+/* ============================================
+   GRADIENT OVERRIDES
+   Tailwind gradient from/to/via tokens
+   ============================================ */
+.from-gray-50 { --tw-gradient-from: #151a28 !important; }
+.from-gray-800 { --tw-gradient-from: #1a2035 !important; }
+.from-slate-50 { --tw-gradient-from: #141925 !important; }
+.to-white { --tw-gradient-to: #1a2035 !important; }
+.to-gray-900 { --tw-gradient-to: #0f1219 !important; }
+
+/* Colored gradient from/to — dark tinted */
+.from-blue-50 { --tw-gradient-from: #12202e !important; }
+.from-cyan-50 { --tw-gradient-from: #0f232a !important; }
+.from-green-50 { --tw-gradient-from: #122a1a !important; }
+.from-green-100 { --tw-gradient-from: #183320 !important; }
+.from-yellow-50 { --tw-gradient-from: #2a2515 !important; }
+.from-red-50 { --tw-gradient-from: #2a1520 !important; }
+.from-red-100 { --tw-gradient-from: #331a25 !important; }
+.from-orange-50 { --tw-gradient-from: #2a1f12 !important; }
+.from-indigo-50 { --tw-gradient-from: #1a1535 !important; }
+.from-emerald-50 { --tw-gradient-from: #122a20 !important; }
+.from-amber-50 { --tw-gradient-from: #2a2212 !important; }
+.from-rose-50 { --tw-gradient-from: #2a1520 !important; }
+.from-purple-50 { --tw-gradient-from: #201530 !important; }
+.from-violet-50 { --tw-gradient-from: #1f1535 !important; }
+
+.to-blue-50 { --tw-gradient-to: #12202e !important; }
+.to-cyan-50 { --tw-gradient-to: #0f232a !important; }
+.to-green-50 { --tw-gradient-to: #122a1a !important; }
+.to-green-100 { --tw-gradient-to: #183320 !important; }
+.to-yellow-50 { --tw-gradient-to: #2a2515 !important; }
+.to-yellow-100 { --tw-gradient-to: #302a18 !important; }
+.to-red-50 { --tw-gradient-to: #2a1520 !important; }
+.to-red-100 { --tw-gradient-to: #331a25 !important; }
+.to-orange-50 { --tw-gradient-to: #2a1f12 !important; }
+.to-indigo-50 { --tw-gradient-to: #1a1535 !important; }
+.to-emerald-50 { --tw-gradient-to: #122a20 !important; }
+.to-purple-50 { --tw-gradient-to: #201530 !important; }
+.to-violet-50 { --tw-gradient-to: #1f1535 !important; }
+
+.via-indigo-50\/50 { --tw-gradient-via: rgba(26, 21, 53, 0.5) !important; }
+.via-purple-50\/50 { --tw-gradient-via: rgba(32, 21, 48, 0.5) !important; }
+.via-amber-50 { --tw-gradient-via: #2a2212 !important; }
+.via-purple-50 { --tw-gradient-via: #201530 !important; }
+
+.to-purple-50\/30 { --tw-gradient-to: rgba(32, 21, 48, 0.3) !important; }
+.to-violet-50\/30 { --tw-gradient-to: rgba(31, 21, 53, 0.3) !important; }
+.to-blue-50\/30 { --tw-gradient-to: rgba(18, 32, 46, 0.3) !important; }
+
+/* ============================================
+   MISSING BACKGROUND CLASSES
+   ============================================ */
+.bg-gray-50\/50 { background-color: rgba(21, 26, 40, 0.5) !important; }
+.bg-gray-400 { background-color: #3d4a60 !important; }
+.bg-gray-600 { background-color: #2d3548 !important; }
+.bg-gray-700 { background-color: #252d40 !important; }
+.bg-slate-200 { background-color: #252d42 !important; }
+.bg-white\/25 { background-color: rgba(255, 255, 255, 0.1) !important; }
+.bg-amber-50 { background-color: #2a2212 !important; }
+.bg-amber-100 { background-color: #332a15 !important; }
+
+/* ============================================
+   MISSING TEXT CLASSES
+   ============================================ */
+.text-slate-600 { color: #9aa3b5 !important; }
+.text-slate-900 { color: #f0f2f5 !important; }
+
+/* ============================================
+   MISSING BORDER CLASSES
+   ============================================ */
+.border-gray-400 { border-color: #3d4a60 !important; }
+.border-slate-300 { border-color: #2d3750 !important; }
+.border-blue-200 { border-color: #1a3050 !important; }
+.border-blue-300 { border-color: #1e3860 !important; }
+.border-indigo-100 { border-color: #222050 !important; }
+.border-indigo-300 { border-color: #2d2565 !important; }
+.border-orange-100 { border-color: #3a2a15 !important; }
+.border-orange-200 { border-color: #4a3518 !important; }
+.border-green-100 { border-color: #153520 !important; }
+.border-green-300 { border-color: #204a30 !important; }
+.border-emerald-100 { border-color: #153520 !important; }
+.border-emerald-200 { border-color: #1a4028 !important; }
+.border-red-100 { border-color: #351520 !important; }
+.border-red-300 { border-color: #501a25 !important; }
+.border-yellow-100 { border-color: #353015 !important; }
+.border-yellow-300 { border-color: #4a4018 !important; }
+.border-blue-400 { border-color: #254570 !important; }
+.border-blue-500 { border-color: #2a4a80 !important; }
+
+/* ============================================
+   FOCUS / ACTIVE STATE OVERRIDES
+   ============================================ */
+.focus\:bg-white:focus { background-color: #1e2538 !important; }
+.active\:bg-white:active { background-color: #222940 !important; }
+.active\:bg-gray-200:active { background-color: #2a3246 !important; }
+.focus\:border-gray-400:focus { border-color: #4a5568 !important; }
+.focus\:border-slate-300:focus { border-color: #3d4a60 !important; }
+.focus\:border-slate-800:focus { border-color: #4a5568 !important; }
+.focus\:ring-slate-100:focus { --tw-ring-color: #222940 !important; }
+.hover\:text-slate-600:hover { color: #9aa3b5 !important; }
+.hover\:bg-slate-50:hover { background-color: #1a2030 !important; }
+.hover\:bg-slate-100:hover { background-color: #1e2538 !important; }
+
+/* ============================================
+   GLASS CARD (used in CekBayar, etc.)
+   ============================================ */
+.glass-card {
+  background: rgba(26, 32, 53, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
