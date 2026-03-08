@@ -20,12 +20,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Riz6ix/KasKelas-WebApp.git"
+    "url": "git+https://github.com/Riz6ix/Dompet-Explosives.git"
   },
   "bugs": {
-    "url": "https://github.com/Riz6ix/KasKelas-WebApp/issues"
+    "url": "https://github.com/Riz6ix/Dompet-Explosives/issues"
   },
-  "homepage": "https://github.com/Riz6ix/KasKelas-WebApp#readme",
+  "homepage": "https://github.com/Riz6ix/Dompet-Explosives#readme",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

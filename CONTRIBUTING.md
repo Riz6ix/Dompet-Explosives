@@ -1,76 +1,55 @@
-# Contributing to KasKelas
+# Contributing
 
-Terima kasih telah tertarik untuk berkontribusi pada proyek KasKelas! Kami menghargai setiap bantuan, mulai dari pelaporan bug hingga penambahan fitur baru.
+Makasih udah tertarik buat contribute ke Dompet Explosives. Semua bentuk bantuan diterima — mulai dari report bug, fix typo, sampe nambah fitur baru.
 
-## 🚀 Cara Berkontribusi
+## Cara Contribute
 
-1.  **Fork** repository ini.
-2.  **Clone** hasil fork Anda ke lokal:
-    ```bash
-    git clone https://github.com/USERNAME/KasKelas-WebApp.git
-    ```
-3.  **Buat branch baru** untuk fitur atau perbaikan Anda:
-    ```bash
-    git checkout -b fitur/nama-fitur-anda
-    ```
-4.  **Lakukan perubahan** pada kode. Pastikan Anda mengikuti gaya pengkodean yang ada.
-5.  **Commit** perubahan Anda dengan pesan yang jelas:
-    ```bash
-    git commit -m "feat: menambah fitur X"
-    ```
-6.  **Push** ke branch Anda:
-    ```bash
-    git push origin fitur/nama-fitur-anda
-    ```
-7.  Buka **Pull Request** di repository utama.
+1. **Fork** repo ini
+2. **Clone** ke lokal kamu:
+   ```bash
+   git clone https://github.com/USERNAME/Dompet-Explosives.git
+   ```
+3. **Buat branch baru**:
+   ```bash
+   git checkout -b fitur/nama-fitur
+   ```
+4. **Code & test** — pastikan gak ada error
+5. **Commit** dengan pesan yang jelas:
+   ```bash
+   git commit -m "feat: tambah fitur X"
+   ```
+6. **Push** ke branch kamu:
+   ```bash
+   git push origin fitur/nama-fitur
+   ```
+7. Buka **Pull Request** di repo utama
 
-## 🛠️ Persyaratan Pengembangan
+## Development Setup
 
-*   Node.js 18+
-*   npm 9+
-*   Gunakan `npm run dev` untuk menjalankan server pengembangan.
-*   Pastikan tidak ada error linting sebelum melakukan push (`npm run lint`).
+- Node.js 18+
+- npm 9+
+- `npm run dev` buat jalanin dev server
+- `npm run build` buat test production build
+- `npm run lint` buat cek linting errors
 
-## 🐞 Melaporkan Bug
+## Report Bug
 
-Jika Anda menemukan bug, silakan buat *issue* baru dengan menyertakan:
-*   Langkah-langkah untuk mereproduksi bug.
-*   Hasil yang diharapkan dan hasil yang sebenarnya.
-*   Screenshot jika diperlukan.
+Ketemu bug? Buat issue baru dan sertakan:
+- Steps to reproduce (langkah buat reproduce)
+- Expected vs actual behavior
+- Screenshot kalau ada
 
-## 💡 Saran Fitur
+## Saran Fitur
 
-Kami sangat terbuka untuk ide-ide baru! Silakan buat *issue* dengan label "enhancement" untuk mendiskusikan fitur baru yang ingin Anda tambahkan.
+Punya ide fitur baru? Buat issue dengan label `enhancement`. Diskusi dulu sebelum langsung ngoding, biar gak overlap.
+
+## Code Style
+
+- React functional components + hooks
+- Tailwind CSS buat styling
+- File naming: PascalCase buat components, camelCase buat utils/hooks
+- Commit message format: `feat:`, `fix:`, `docs:`, `style:`, `refactor:`
 
 ---
 
-# English Version
-
-## 🚀 How to Contribute
-
-1.  **Fork** this repository.
-2.  **Clone** your fork locally:
-    ```bash
-    git clone https://github.com/USERNAME/KasKelas-WebApp.git
-    ```
-3.  **Create a new branch** for your feature or fix:
-    ```bash
-    git checkout -b feature/your-feature-name
-    ```
-4.  **Make your changes**. Ensure you follow the existing coding style.
-5.  **Commit** your changes with a clear message:
-    ```bash
-    git commit -m "feat: add feature X"
-    ```
-6.  **Push** to your branch:
-    ```bash
-    git push origin feature/your-feature-name
-    ```
-7.  Open a **Pull Request** on the main repository.
-
-## 🛠️ Development Requirements
-
-*   Node.js 18+
-*   npm 9+
-*   Use `npm run dev` to run the development server.
-*   Ensure there are no linting errors before pushing (`npm run lint`).
+Thanks for making this project better. 🤝
