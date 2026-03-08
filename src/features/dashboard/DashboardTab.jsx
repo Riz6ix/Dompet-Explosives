@@ -230,7 +230,7 @@ const DashboardTab = ({
 
       {/* 📋 Iuran Berjalan - SOLID COLOR */}
       {iuranKhusus.length > 0 && (
-        <div className="bg-white rounded-xl shadow-sm p-4">
+        <div className="glass-card bg-white rounded-xl shadow-sm p-4">
           <div className="flex items-center justify-between mb-3">
             <h3 className="font-bold text-gray-800 flex items-center gap-2">
               <span className="text-lg">📋</span>
