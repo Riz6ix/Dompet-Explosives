@@ -1,5 +1,5 @@
 import React from "react";
-import { LucideIcon } from "../../components/ui/index.js";
+import { LucideIcon, CustomSelect } from "../../components/ui/index.js";
 import { formatDateShort } from "../../utils/index.js";
 
 const PerAnggotaTab = ({
@@ -821,20 +821,17 @@ const PerAnggotaTab = ({
                 <p className="text-sm mt-2">Buat iuran baru di tab "Iuran"</p>
               </div>
             ) : (
-              <select
+              <CustomSelect
                 value={selectedCekWeek}
                 onChange={(e) =>
                   setSelectedCekWeek(Number.parseInt(e.target.value))
                 }
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
-              >
-                <option value="">-- Pilih Iuran --</option>
-                {iuranKhusus.map((iuran) => (
-                  <option key={iuran.id} value={iuran.id}>
-                    {iuran.name} - Rp {iuran.amount.toLocaleString("id-ID")}
-                  </option>
-                ))}
-              </select>
+                placeholder="-- Pilih Iuran --"
+                options={iuranKhusus.map((iuran) => ({
+                  value: iuran.id,
+                  label: `${iuran.name} - Rp ${iuran.amount.toLocaleString("id-ID")}`,
+                }))}
+              />
             )}
           </div>
 

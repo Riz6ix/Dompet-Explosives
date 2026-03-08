@@ -4,6 +4,12 @@
    (Moved from dynamic style injection for performance)
    ============================================ */
 
+/* ── CustomSelect dropdown animation ── */
+@keyframes selectDropIn {
+  from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 /* ── CekBayarTab ── */
 .cb-shimmer-bg { background-size: 200% 100%; animation: cbShimmerBg 3s ease-in-out infinite; }
 @keyframes cbShimmerBg { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }

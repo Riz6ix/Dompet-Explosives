@@ -1,5 +1,5 @@
 import React from "react";
-import { LucideIcon } from "../../components/ui/index.js";
+import { LucideIcon, CustomSelect } from "../../components/ui/index.js";
 import {
   Wallet,
   ClipboardList,
@@ -172,24 +172,20 @@ const CekBayarTab = ({
                   <LucideIcon name="Calendar" size={16} />
                   Pilih Minggu
                 </label>
-                <select
+                <CustomSelect
                   value={selectedCekWeek}
                   onChange={(e) =>
                     setSelectedCekWeek(Number.parseInt(e.target.value))
                   }
-                  className="w-full p-3 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                >
-                  {Array.from(
+                  placeholder="Pilih Minggu"
+                  options={Array.from(
                     { length: getCurrentWeek },
-                    (_, i) => i + 1,
-                  )
-                    .reverse()
-                    .map((week) => (
-                      <option key={week} value={week}>
-                        Minggu {week} - {getWeekDate(week)}
-                      </option>
-                    ))}
-                </select>
+                    (_, i) => getCurrentWeek - i,
+                  ).map((week) => ({
+                    value: week,
+                    label: `Minggu ${week} - ${getWeekDate(week)}`,
+                  }))}
+                />
               </div>
 
               <button
@@ -957,21 +953,17 @@ const CekBayarTab = ({
                     Belum ada iuran
                   </div>
                 ) : (
-                  <select
+                  <CustomSelect
                     value={selectedCekWeek}
                     onChange={(e) =>
                       setSelectedCekWeek(Number.parseInt(e.target.value))
                     }
-                    className="w-full p-3 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
-                  >
-                    <option value="">-- Pilih Iuran --</option>
-                    {iuranKhusus.map((iuran) => (
-                      <option key={iuran.id} value={iuran.id}>
-                        {iuran.name} - Rp{" "}
-                        {iuran.amount.toLocaleString("id-ID")}
-                      </option>
-                    ))}
-                  </select>
+                    placeholder="-- Pilih Iuran --"
+                    options={iuranKhusus.map((iuran) => ({
+                      value: iuran.id,
+                      label: `${iuran.name} - Rp ${iuran.amount.toLocaleString("id-ID")}`,
+                    }))}
+                  />
                 )}
               </div>
 

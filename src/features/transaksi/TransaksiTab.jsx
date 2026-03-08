@@ -1,5 +1,5 @@
 import React from "react";
-import { LucideIcon } from "../../components/ui/index.js";
+import { LucideIcon, CustomSelect } from "../../components/ui/index.js";
 import { formatDateWithDay } from "../../utils/formatters.js";
 import { EXPENSE_CATEGORIES, ITEMS_PER_PAGE } from "../../constants/config.js";
 
@@ -185,7 +185,7 @@ const TransaksiTab = ({
 
           {/* Pilihan anggota (hanya pemasukan) */}
           {transactionForm.type === "pemasukan" && (
-            <select
+            <CustomSelect
               value={transactionForm.member}
               onChange={(e) =>
                 setTransactionForm({
@@ -193,25 +193,18 @@ const TransaksiTab = ({
                   member: e.target.value,
                 })
               }
-              className={`${inputBase} cursor-pointer`}
-            >
-              <option value="">Pilih Anggota (Opsional)</option>
-              {/* Wali Kelas — terpisah di atas */}
-              {members.filter((m) => m.no === 0).map((m) => (
-                <option key={m.no} value={m.no}>
-                  🧑‍🏫 {m.nama}
-                </option>
-              ))}
-              {members.filter((m) => m.no === 0).length > 0 && (
-                <option disabled>────────────────</option>
-              )}
-              {/* Siswa */}
-              {members.filter((m) => m.no !== 0).map((member) => (
-                <option key={member.no} value={member.no}>
-                  {member.no}. {member.nama}
-                </option>
-              ))}
-            </select>
+              placeholder="Pilih Anggota (Opsional)"
+              options={[
+                ...members.filter((m) => m.no === 0).map((m) => ({
+                  value: m.no,
+                  label: `🧑‍🏫 ${m.nama}`,
+                })),
+                ...members.filter((m) => m.no !== 0).map((member) => ({
+                  value: member.no,
+                  label: `${member.no}. ${member.nama}`,
+                })),
+              ]}
+            />
           )}
 
           {/* Date picker */}
@@ -404,16 +397,16 @@ const TransaksiTab = ({
                   <LucideIcon name="ArrowDownUp" size={14} />
                   Urutkan Berdasarkan
                 </label>
-                <select
+                <CustomSelect
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-white border-2 border-gray-200 rounded-xl focus:ring-0 focus:border-cyan-500 font-medium text-gray-700 text-sm cursor-pointer transition-all"
-                >
-                  <option value="terbaru">🕐 Terbaru</option>
-                  <option value="terlama">🕰️ Terlama</option>
-                  <option value="terbesar">💎 Terbesar</option>
-                  <option value="terkecil">🪙 Terkecil</option>
-                </select>
+                  options={[
+                    { value: "terbaru", label: "🕐 Terbaru" },
+                    { value: "terlama", label: "🕰️ Terlama" },
+                    { value: "terbesar", label: "💎 Terbesar" },
+                    { value: "terkecil", label: "🪙 Terkecil" },
+                  ]}
+                />
               </div>
 
               {/* Reset Button */}

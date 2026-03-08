@@ -13,6 +13,7 @@ export { default as AnimatedNumber } from "./AnimatedNumber.jsx";
 export { default as AnimatedNumberWithTrend } from "./AnimatedNumberWithTrend.jsx";
 export { default as ErrorBoundary } from "./ErrorBoundary.jsx";
 export { default as Toast } from "./Toast.jsx";
+export { default as CustomSelect } from "./CustomSelect.jsx";
 
 // Icons — named exports
 export {

@@ -1,5 +1,5 @@
 import React from "react";
-import { LucideIcon } from "../../components/ui/index.js";
+import { LucideIcon, CustomSelect } from "../../components/ui/index.js";
 import { Plus } from "../../components/ui/Icons.jsx";
 
 const CicilanTab = ({
@@ -121,22 +121,19 @@ const CicilanTab = ({
               <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">
                 Pilih Anggota
               </label>
-              <select
+              <CustomSelect
                 value={cicilanForm.memberNo}
                 onChange={(e) =>
                   setCicilanForm({ ...cicilanForm, memberNo: e.target.value })
                 }
-                className="w-full p-2.5 border-2 border-gray-200 rounded-xl focus:ring-0 focus:border-gray-400 text-sm bg-white transition-all"
-              >
-                <option value="">-- Pilih Anggota --</option>
-                {members
+                placeholder="-- Pilih Anggota --"
+                options={members
                   .filter((m) => m.no !== 0)
-                  .map((member) => (
-                    <option key={member.no} value={member.no}>
-                      {member.no}. {member.nama}
-                    </option>
-                  ))}
-              </select>
+                  .map((member) => ({
+                    value: member.no,
+                    label: `${member.no}. ${member.nama}`,
+                  }))}
+              />
             </div>
 
             {/* PILIH MINGGU (KAS) */}
@@ -145,29 +142,20 @@ const CicilanTab = ({
                 <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">
                   Pilih Minggu
                 </label>
-                <select
+                <CustomSelect
                   value={cicilanForm.week}
                   onChange={(e) =>
                     setCicilanForm({ ...cicilanForm, week: e.target.value })
                   }
-                  className="w-full p-2.5 border-2 border-gray-200 rounded-xl focus:ring-0 focus:border-gray-400 text-sm bg-white transition-all"
-                >
-                  <option value="">-- Pilih Minggu --</option>
-                  {Array.from({ length: getCurrentWeek }, (_, i) => i + 1)
+                  placeholder="-- Pilih Minggu --"
+                  options={Array.from({ length: getCurrentWeek }, (_, i) => i + 1)
                     .reverse()
-                    .map((week) => (
-                      <option
-                        key={week}
-                        value={week}
-                        disabled={disabledWeeks[week]}
-                      >
-                        Minggu {week}{" "}
-                        {disabledWeeks[week]
-                          ? "(🛑 LIBUR)"
-                          : `- ${getWeekDate(week)}`}
-                      </option>
-                    ))}
-                </select>
+                    .filter((week) => !disabledWeeks[week])
+                    .map((week) => ({
+                      value: week,
+                      label: `Minggu ${week} - ${getWeekDate(week)}`,
+                    }))}
+                />
               </div>
             )}
 
@@ -183,20 +171,17 @@ const CicilanTab = ({
                     <p className="text-xs font-medium">Belum ada iuran</p>
                   </div>
                 ) : (
-                  <select
+                  <CustomSelect
                     value={cicilanForm.iuranId}
                     onChange={(e) =>
                       setCicilanForm({ ...cicilanForm, iuranId: e.target.value })
                     }
-                    className="w-full p-2.5 border-2 border-gray-200 rounded-xl focus:ring-0 focus:border-gray-400 text-sm bg-white transition-all"
-                  >
-                    <option value="">-- Pilih Iuran --</option>
-                    {iuranKhusus.map((iuran) => (
-                      <option key={iuran.id} value={iuran.id}>
-                        {iuran.name} - Rp {iuran.amount.toLocaleString("id-ID")}
-                      </option>
-                    ))}
-                  </select>
+                    placeholder="-- Pilih Iuran --"
+                    options={iuranKhusus.map((iuran) => ({
+                      value: iuran.id,
+                      label: `${iuran.name} - Rp ${iuran.amount.toLocaleString("id-ID")}`,
+                    }))}
+                  />
                 )}
               </div>
             )}
