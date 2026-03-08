@@ -941,7 +941,7 @@ const App = () => {
       .filter((m) => m.no !== 0)
       .forEach((member) => {
         for (let w = 1; w <= currentWeek; w++) {
-          if (disabledWeeks[w]) continue;
+          // Deposit di minggu libur TETAP dihitung ke saldo
           const key = `${w}-${member.no}`;
           if (kasMingguan[key] === true) {
             kasTotal += KAS_MINGGUAN_AMOUNT;
@@ -995,6 +995,41 @@ const App = () => {
   ]);
   saldoAkhirRef.current = saldoAkhir;
 
+  // 💰 DEPOSIT CARRY-FORWARD: Map deposit dari minggu libur → lunas di minggu aktif berikutnya
+  const depositCarryForward = React.useMemo(() => {
+    const carryMap = {}; // key: "targetWeek-memberNo" → { fromWeek }
+    const depositSourceMap = {}; // key: "sourceWeek-memberNo" → { targetWeek }
+
+    members
+      .filter((m) => m.no !== 0)
+      .forEach((member) => {
+        for (let w = 1; w <= currentWeek; w++) {
+          if (!disabledWeeks[w]) continue; // Hanya proses minggu libur
+          const key = `${w}-${member.no}`;
+          if (kasMingguan[key] !== true) continue; // Hanya yang sudah bayar (deposit)
+
+          // Cari minggu aktif berikutnya yang BELUM lunas
+          let targetWeek = null;
+          for (let nw = w + 1; nw <= currentWeek; nw++) {
+            if (disabledWeeks[nw]) continue; // Skip minggu libur juga
+            const nextKey = `${nw}-${member.no}`;
+            if (kasMingguan[nextKey] === true) continue; // Sudah lunas sendiri
+            if (carryMap[nextKey]) continue; // Sudah di-carry dari deposit lain
+            targetWeek = nw;
+            break;
+          }
+
+          if (targetWeek) {
+            const targetKey = `${targetWeek}-${member.no}`;
+            carryMap[targetKey] = { fromWeek: w };
+            depositSourceMap[`${w}-${member.no}`] = { targetWeek };
+          }
+        }
+      });
+
+    return { carryMap, depositSourceMap };
+  }, [members, currentWeek, disabledWeeks, kasMingguan]);
+
   const totalCicilanTerbayar = Object.values(cicilan).reduce(
     (total, cicilanList) =>
       total + cicilanList.reduce((sum, c) => sum + (c.amount || 0), 0),
@@ -1005,10 +1040,9 @@ const App = () => {
   const isBudgetWarning = totalPengeluaran > totalPemasukan * 0.8;
 
   // Hitung total kas mingguan yang terkumpul
+  // Deposit di minggu libur tetap dihitung
   const totalKasMingguan = Object.keys(kasMingguan).reduce((total, key) => {
     if (!kasMingguan[key]) return total;
-    const weekNum = parseInt(key.split("-")[0]);
-    if (disabledWeeks[weekNum]) return total;
     return total + KAS_MINGGUAN_AMOUNT;
   }, 0);
 
@@ -1576,7 +1610,7 @@ const App = () => {
       }
     }
 
-    // Special check: full_lunas_all
+    // Special check: full_lunas_all (deposit carry-forward counts!)
     if (!done.includes("full_lunas_all")) {
       const siswa = members.filter((m) => m.no !== 0);
       const allLunas =
@@ -1586,7 +1620,8 @@ const App = () => {
           for (let w = 1; w <= currentWeek; w++) {
             if (disabledWeeks[w]) continue;
             const key = `${w}-${m.no}`;
-            if (!kasMingguan[key]) return false;
+            // Lunas langsung ATAU di-cover deposit carry-forward
+            if (!kasMingguan[key] && !depositCarryForward.carryMap[key]) return false;
           }
           return true;
         });
@@ -1596,7 +1631,7 @@ const App = () => {
       }
     }
 
-    // Special check: sigma_grindset (10 minggu berturut-turut full lunas)
+    // Special check: sigma_grindset (10 minggu berturut-turut full lunas, deposit counts!)
     if (!done.includes("sigma_grindset") && currentWeek >= 10) {
       const siswa = members.filter((m) => m.no !== 0);
       let consecutiveFull = 0;
@@ -1605,7 +1640,7 @@ const App = () => {
           continue;
         }
         const weekFull = siswa.every(
-          (m) => kasMingguan[`${w}-${m.no}`] === true,
+          (m) => kasMingguan[`${w}-${m.no}`] === true || !!depositCarryForward.carryMap[`${w}-${m.no}`],
         );
         if (weekFull) {
           consecutiveFull++;
@@ -2811,14 +2846,33 @@ const App = () => {
         : payments[`${targetId}-${memberNo}`];
 
     if (isLunas) {
+      // Cek apakah ini deposit (lunas di minggu libur)
+      const isDeposit = type === "kas" && disabledWeeks[week];
+      const depositTarget = isDeposit ? depositCarryForward.depositSourceMap[`${week}-${memberNo}`] : null;
+      return {
+        status: isDeposit ? "deposit" : "lunas",
+        label: isDeposit ? "💰 Deposit" : "✓ Lunas",
+        color: isDeposit ? "bg-yellow-500" : "bg-green-500",
+        textColor: "text-white",
+        icon: isDeposit ? "💰" : "✓",
+        detail: depositTarget ? `Di-carry ke Minggu ${depositTarget.targetWeek}` : null,
+        totalCicilan: totalCicilanVal,
+        sisa: 0,
+        persen: 100,
+      };
+    }
+
+    // Cek apakah minggu ini di-cover oleh deposit carry-forward
+    if (type === "kas" && depositCarryForward.carryMap[`${week}-${memberNo}`]) {
+      const fromWeek = depositCarryForward.carryMap[`${week}-${memberNo}`].fromWeek;
       return {
         status: "lunas",
         label: "✓ Lunas",
         color: "bg-green-500",
         textColor: "text-white",
         icon: "✓",
-        detail: null,
-        totalCicilan: totalCicilanVal,
+        detail: `Lunas dari deposit Minggu ${fromWeek}`,
+        totalCicilan: 0,
         sisa: 0,
         persen: 100,
       };
@@ -4507,6 +4561,7 @@ const App = () => {
             copyGroupReport={copyGroupReport}
             cekBayarKey={cekBayarKey}
             onQuickCicil={handleQuickCicil}
+            depositCarryForward={depositCarryForward}
           />
         )}
 
@@ -4555,6 +4610,7 @@ const App = () => {
             executeToggle={executeToggle}
             isToggling={isToggling}
             onQuickCicil={handleQuickCicil}
+            depositCarryForward={depositCarryForward}
           />
         )}
 

@@ -26,6 +26,7 @@ const PerAnggotaTab = ({
   executeToggle,
   isToggling,
   onQuickCicil,
+  depositCarryForward = { carryMap: {}, depositSourceMap: {} },
 }) => {
   // Quick Cicil local state
   const [selectedIuranDetail, setSelectedIuranDetail] = React.useState(null);
@@ -258,32 +259,65 @@ const PerAnggotaTab = ({
           let totalKasBelum = 0;
 
           for (let week = 1; week <= getCurrentWeek; week++) {
-            if (disabledWeeks[week]) continue;
+            const isWeekDisabled = disabledWeeks[week];
+            const kasKey = `${week}-${memberNo}`;
+            const isLunas = kasMingguan[kasKey] === true;
+            const carryInfo = depositCarryForward.carryMap[kasKey];
+            const depositTarget = depositCarryForward.depositSourceMap[kasKey];
 
-            const isLunas = kasMingguan[`${week}-${memberNo}`] === true;
+            if (isWeekDisabled && !isLunas) continue; // Minggu libur tanpa deposit → skip
+
             const totalCicilan = getTotalCicilan("kas", null, week, memberNo);
-            const statusDetail = getPaymentStatusDetail(
-              "kas",
-              null,
-              week,
-              memberNo,
-            );
 
-            kasData.push({
-              week,
-              status: statusDetail.status,
-              label: statusDetail.label,
-              cicilan: totalCicilan,
-              sisa: Math.max(0, KAS_MINGGUAN_AMOUNT - totalCicilan),
-              isLunas,
-            });
-
-            if (isLunas) {
+            if (isWeekDisabled && isLunas) {
+              // Deposit: bayar di minggu libur
+              kasData.push({
+                week,
+                status: "deposit",
+                label: depositTarget
+                  ? `💰 Deposit → M${depositTarget.targetWeek}`
+                  : "💰 Deposit (belum carry)",
+                cicilan: 0,
+                sisa: 0,
+                isLunas: true,
+              });
               totalKasLunas += KAS_MINGGUAN_AMOUNT;
-            } else if (totalCicilan > 0) {
-              totalKasCicilan += totalCicilan;
+            } else if (carryInfo) {
+              // Minggu aktif yang di-cover deposit
+              kasData.push({
+                week,
+                status: "lunas",
+                label: `✓ Lunas (deposit M${carryInfo.fromWeek})`,
+                cicilan: 0,
+                sisa: 0,
+                isLunas: false,
+              });
+              // Tidak tambah totalKasLunas karena sudah dihitung di deposit source
             } else {
-              totalKasBelum += KAS_MINGGUAN_AMOUNT;
+              // Minggu aktif normal
+              const statusDetail = getPaymentStatusDetail(
+                "kas",
+                null,
+                week,
+                memberNo,
+              );
+
+              kasData.push({
+                week,
+                status: statusDetail.status,
+                label: statusDetail.label,
+                cicilan: totalCicilan,
+                sisa: Math.max(0, KAS_MINGGUAN_AMOUNT - totalCicilan),
+                isLunas,
+              });
+
+              if (isLunas) {
+                totalKasLunas += KAS_MINGGUAN_AMOUNT;
+              } else if (totalCicilan > 0) {
+                totalKasCicilan += totalCicilan;
+              } else {
+                totalKasBelum += KAS_MINGGUAN_AMOUNT;
+              }
             }
           }
 

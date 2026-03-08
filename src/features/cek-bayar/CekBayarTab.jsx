@@ -51,6 +51,8 @@ const CekBayarTab = ({
   cekBayarKey,
   // Quick cicil callback
   onQuickCicil,
+  // Deposit carry-forward
+  depositCarryForward = { carryMap: {}, depositSourceMap: {} },
 }) => {
   const _formatDateShort = formatDateShort;
 
@@ -572,9 +574,13 @@ const CekBayarTab = ({
                   const isWeekDisabled =
                     disabledWeeks[selectedCekWeek];
 
+                  // Cek carry-forward: minggu ini di-cover deposit dari minggu libur?
+                  const carryInfo = depositCarryForward.carryMap[`${selectedCekWeek}-${member.no}`];
+
                   if (isLunas) {
                     if (isWeekDisabled) {
                       // SKENARIO: Sudah Bayar tapi Libur (DEPOSIT)
+                      const depositTarget = depositCarryForward.depositSourceMap[`${selectedCekWeek}-${member.no}`];
                       status = "deposit";
                       statusLabel = "Deposit";
                       statusColor =
@@ -582,8 +588,9 @@ const CekBayarTab = ({
                       StatusIcon = ({ size }) => (
                         <LucideIcon name="PiggyBank" size={size} />
                       );
-                      detailText =
-                        "💰 Uang aman! Bisa dipakai untuk minggu depan.";
+                      detailText = depositTarget
+                        ? `💰 Di-carry ke Minggu ${depositTarget.targetWeek}`
+                        : "💰 Uang aman! Belum ada minggu aktif untuk carry.";
                     } else {
                       status = "lunas";
                       statusLabel = "Lunas";
@@ -596,6 +603,13 @@ const CekBayarTab = ({
                         detailText = "Lunas langsung";
                       }
                     }
+                  } else if (carryInfo) {
+                    // SKENARIO: Minggu ini di-cover oleh deposit dari minggu libur
+                    status = "lunas";
+                    statusLabel = "Lunas";
+                    statusColor = "bg-green-500 hover:bg-green-600";
+                    StatusIcon = CheckCircle;
+                    detailText = `✨ Lunas dari deposit Minggu ${carryInfo.fromWeek}`;
                   } else if (totalCicilan > 0) {
                     status = "cicil";
                     statusLabel = "Cicil";
