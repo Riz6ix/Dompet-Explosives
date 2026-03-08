@@ -2,9 +2,11 @@
  * CustomSelect.jsx
  * Custom styled dropdown to replace native <select> elements.
  * Dark-theme-friendly, animated, mobile-optimized.
+ * Uses React Portal so dropdown never gets clipped by parent overflow.
  */
 
 import React from "react";
+import ReactDOM from "react-dom";
 import { LucideIcon } from "./index.js";
 
 const CustomSelect = React.memo(({
@@ -17,6 +19,7 @@ const CustomSelect = React.memo(({
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [search, setSearch] = React.useState("");
+  const [dropdownPos, setDropdownPos] = React.useState(null);
   const containerRef = React.useRef(null);
   const searchRef = React.useRef(null);
   const listRef = React.useRef(null);
@@ -31,11 +34,31 @@ const CustomSelect = React.memo(({
       : selectedOption
     : null;
 
+  // Calculate dropdown position when opening
+  React.useEffect(() => {
+    if (!isOpen || !containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const viewportH = window.innerHeight;
+    const spaceBelow = viewportH - rect.bottom;
+    const spaceAbove = rect.top;
+    // Dropdown max height ~280px — if not enough space below, open upward
+    const openUp = spaceBelow < 200 && spaceAbove > spaceBelow;
+    setDropdownPos({
+      top: openUp ? undefined : rect.bottom + 6,
+      bottom: openUp ? viewportH - rect.top + 6 : undefined,
+      left: rect.left,
+      width: rect.width,
+    });
+  }, [isOpen]);
+
   // Close on outside click
   React.useEffect(() => {
     if (!isOpen) return;
     const handler = (e) => {
       if (containerRef.current && !containerRef.current.contains(e.target)) {
+        // Also check if click is inside the portal dropdown
+        const portal = document.getElementById("custom-select-portal");
+        if (portal && portal.contains(e.target)) return;
         setIsOpen(false);
         setSearch("");
       }
@@ -48,20 +71,47 @@ const CustomSelect = React.memo(({
     };
   }, [isOpen]);
 
+  // Recalculate position on scroll/resize
+  React.useEffect(() => {
+    if (!isOpen) return;
+    const reposition = () => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const viewportH = window.innerHeight;
+      const spaceBelow = viewportH - rect.bottom;
+      const spaceAbove = rect.top;
+      const openUp = spaceBelow < 200 && spaceAbove > spaceBelow;
+      setDropdownPos({
+        top: openUp ? undefined : rect.bottom + 6,
+        bottom: openUp ? viewportH - rect.top + 6 : undefined,
+        left: rect.left,
+        width: rect.width,
+      });
+    };
+    window.addEventListener("scroll", reposition, true);
+    window.addEventListener("resize", reposition);
+    return () => {
+      window.removeEventListener("scroll", reposition, true);
+      window.removeEventListener("resize", reposition);
+    };
+  }, [isOpen]);
+
   // Focus search on open
   React.useEffect(() => {
     if (isOpen && searchRef.current && options.length > 6) {
-      searchRef.current.focus();
+      setTimeout(() => searchRef.current?.focus(), 50);
     }
   }, [isOpen, options.length]);
 
   // Scroll selected into view
   React.useEffect(() => {
     if (isOpen && listRef.current && value) {
-      const active = listRef.current.querySelector("[data-active='true']");
-      if (active) {
-        active.scrollIntoView({ block: "nearest" });
-      }
+      setTimeout(() => {
+        const active = listRef.current?.querySelector("[data-active='true']");
+        if (active) {
+          active.scrollIntoView({ block: "nearest" });
+        }
+      }, 60);
     }
   }, [isOpen, value]);
 
@@ -79,6 +129,17 @@ const CustomSelect = React.memo(({
     onChange({ target: { value: optValue } });
     setIsOpen(false);
     setSearch("");
+  };
+
+  // Ensure portal root exists
+  const getPortalRoot = () => {
+    let el = document.getElementById("custom-select-portal");
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "custom-select-portal";
+      document.body.appendChild(el);
+    }
+    return el;
   };
 
   return (
@@ -111,13 +172,18 @@ const CustomSelect = React.memo(({
         </span>
       </button>
 
-      {/* Dropdown Panel */}
-      {isOpen && (
+      {/* Dropdown Panel — rendered via Portal to escape overflow clipping */}
+      {isOpen && dropdownPos && ReactDOM.createPortal(
         <div
-          className="absolute z-50 mt-1.5 w-full bg-white border-2 border-gray-200 rounded-xl shadow-xl overflow-hidden"
+          className="fixed bg-white border-2 border-gray-200 rounded-xl shadow-xl overflow-hidden"
           style={{
             animation: "selectDropIn 0.15s ease-out",
             maxHeight: "280px",
+            zIndex: 99999,
+            top: dropdownPos.top != null ? `${dropdownPos.top}px` : undefined,
+            bottom: dropdownPos.bottom != null ? `${dropdownPos.bottom}px` : undefined,
+            left: `${dropdownPos.left}px`,
+            width: `${dropdownPos.width}px`,
           }}
         >
           {/* Search (only if > 6 options) */}
@@ -176,7 +242,8 @@ const CustomSelect = React.memo(({
               })
             )}
           </div>
-        </div>
+        </div>,
+        getPortalRoot()
       )}
     </div>
   );

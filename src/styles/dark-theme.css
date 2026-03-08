@@ -373,3 +373,48 @@ hr {
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
 }
+
+/* ============================================
+   PORTAL DROPDOWN (CustomSelect)
+   ============================================ */
+#custom-select-portal .bg-white {
+  background-color: #1e2538 !important;
+}
+#custom-select-portal .border-gray-200 {
+  border-color: #2a3246 !important;
+}
+#custom-select-portal .border-gray-100 {
+  border-color: #222940 !important;
+}
+#custom-select-portal .bg-gray-50 {
+  background-color: #151a28 !important;
+}
+#custom-select-portal .bg-indigo-50 {
+  background-color: #1a1535 !important;
+}
+#custom-select-portal .text-gray-700 {
+  color: #c8cdd8 !important;
+}
+#custom-select-portal .text-gray-400 {
+  color: #9099ad !important;
+}
+#custom-select-portal .text-indigo-700 {
+  color: #a5b4fc !important;
+}
+#custom-select-portal .hover\:bg-gray-50:hover {
+  background-color: #1a2030 !important;
+}
+#custom-select-portal .active\:bg-gray-100:active {
+  background-color: #222940 !important;
+}
+
+/* ============================================
+   QUEST BADGE NOTIFICATION PULSE
+   ============================================ */
+@keyframes questBadgePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+.quest-badge-pulse {
+  animation: questBadgePulse 2s ease-in-out infinite;
+}
