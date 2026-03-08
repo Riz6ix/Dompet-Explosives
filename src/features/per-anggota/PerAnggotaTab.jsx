@@ -949,17 +949,17 @@ const PerAnggotaTab = ({
 
                           // Hitung status REAL
                           let status = "belum";
-                          let statusLabel = "🔴 Belum";
+                          let statusLabel = "Belum";
                           let statusColor = "bg-red-500";
                           let detailText = "";
 
                           if (isLunas) {
                             status = "lunas";
-                            statusLabel = "🟢 Lunas";
+                            statusLabel = "Lunas";
                             statusColor = "bg-green-500";
                           } else if (totalCicilan > 0) {
                             status = "cicil";
-                            statusLabel = "🟡 Cicil";
+                            statusLabel = "Cicil";
                             statusColor = "bg-yellow-500";
                             const sisa = selectedIuran.amount - totalCicilan;
                             detailText = `Terbayar: Rp ${totalCicilan.toLocaleString(
@@ -983,7 +983,7 @@ const PerAnggotaTab = ({
                           return (
                             <div
                               key={member.no}
-                              className="bg-gray-50 rounded-lg p-3 hover:bg-gray-100 transition-colors"
+                              className="bg-gray-50 text-white rounded-lg p-3 hover:bg-gray-100 transition-colors"
                             >
                               <div className="flex items-center justify-between gap-3">
                                 {/* Member Info */}
@@ -1017,7 +1017,7 @@ const PerAnggotaTab = ({
                                       );
                                     }}
                                     disabled={isToggling}
-                                    className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${statusColor} hover:opacity-90 text-white`}
+                                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${statusColor} hover:opacity-90 text-white`}
                                   >
                                     {statusLabel}
                                   </button>
@@ -1030,7 +1030,7 @@ const PerAnggotaTab = ({
                                         if (quickCicilOpen === qKey) closeQuickCicil();
                                         else openQuickCicil(qKey);
                                       }}
-                                      className="px-3 py-1 bg-orange-400 hover:bg-orange-500 text-white text-xs font-semibold rounded-full transition-colors flex items-center gap-1"
+                                      className="px-3 py-1.5 bg-orange-400 hover:bg-orange-500 text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-1"
                                       title="Quick Cicil"
                                     >
                                       <LucideIcon name="Banknote" size={12} />

@@ -185,7 +185,7 @@ const DashboardTab = ({
             .map((transaction) => (
               <div
                 key={transaction.id}
-                className="flex justify-between items-center p-3 bg-gray-50 rounded-lg"
+                className="flex justify-between text-white items-center p-3 bg-gray-50 rounded-lg"
               >
                 <div className="flex-1">
                   <div className="font-medium text-sm">

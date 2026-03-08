@@ -67,7 +67,8 @@ const CekBayarTab = ({
 
   // Derive kas progress for confetti effect (outside render path)
   const _kasIsComplete = React.useMemo(() => {
-    if (cekBayarMode !== "kas" || !members || members.length === 0) return false;
+    if (cekBayarMode !== "kas" || !members || members.length === 0)
+      return false;
     const totalSiswa = members.filter((m) => m.no !== 0).length;
     if (totalSiswa === 0) return false;
     const totalTerkumpul = members
@@ -76,7 +77,12 @@ const CekBayarTab = ({
         const key = `${selectedCekWeek}-${member.no}`;
         const isLunas = kasMingguan[key] === true;
         if (isLunas) return sum + KAS_MINGGUAN_AMOUNT;
-        const totalCicilan = getTotalCicilan("kas", null, selectedCekWeek, member.no);
+        const totalCicilan = getTotalCicilan(
+          "kas",
+          null,
+          selectedCekWeek,
+          member.no,
+        );
         const transaksiPelunasan = transactions
           .filter(
             (t) =>
@@ -90,15 +96,52 @@ const CekBayarTab = ({
       }, 0);
     const targetTotal = totalSiswa * KAS_MINGGUAN_AMOUNT;
     return targetTotal > 0 && totalTerkumpul >= targetTotal;
-  }, [cekBayarMode, members, kasMingguan, selectedCekWeek, KAS_MINGGUAN_AMOUNT, getTotalCicilan, transactions]);
+  }, [
+    cekBayarMode,
+    members,
+    kasMingguan,
+    selectedCekWeek,
+    KAS_MINGGUAN_AMOUNT,
+    getTotalCicilan,
+    transactions,
+  ]);
 
   // 🎉 Confetti useEffect — triggers when week is 100% collected
   React.useEffect(() => {
-    if (_kasIsComplete && hasConfettiFired !== selectedCekWeek && window.confetti) {
+    if (
+      _kasIsComplete &&
+      hasConfettiFired !== selectedCekWeek &&
+      window.confetti
+    ) {
       setHasConfettiFired(selectedCekWeek);
-      window.confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 }, colors: ['#22c55e', '#10b981', '#34d399', '#fbbf24', '#f59e0b'] });
-      setTimeout(() => window.confetti({ particleCount: 40, angle: 60, spread: 55, origin: { x: 0, y: 0.65 }, colors: ['#22c55e', '#a855f7', '#3b82f6'] }), 200);
-      setTimeout(() => window.confetti({ particleCount: 40, angle: 120, spread: 55, origin: { x: 1, y: 0.65 }, colors: ['#f59e0b', '#ef4444', '#ec4899'] }), 400);
+      window.confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ["#22c55e", "#10b981", "#34d399", "#fbbf24", "#f59e0b"],
+      });
+      setTimeout(
+        () =>
+          window.confetti({
+            particleCount: 40,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0, y: 0.65 },
+            colors: ["#22c55e", "#a855f7", "#3b82f6"],
+          }),
+        200,
+      );
+      setTimeout(
+        () =>
+          window.confetti({
+            particleCount: 40,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1, y: 0.65 },
+            colors: ["#f59e0b", "#ef4444", "#ec4899"],
+          }),
+        400,
+      );
     }
   }, [_kasIsComplete, selectedCekWeek, hasConfettiFired]);
 
@@ -211,8 +254,7 @@ const CekBayarTab = ({
                 Progress Minggu {selectedCekWeek}
               </h3>
               <div className="text-xs sm:text-sm font-semibold text-blue-700 bg-blue-100 px-3 py-1 rounded-full w-fit">
-                Target: Rp{" "}
-                {KAS_MINGGUAN_AMOUNT.toLocaleString("id-ID")}
+                Target: Rp {KAS_MINGGUAN_AMOUNT.toLocaleString("id-ID")}
               </div>
             </div>
 
@@ -253,13 +295,12 @@ const CekBayarTab = ({
                   return sum + totalBayar;
                 }, 0);
 
-              const totalSiswa = members.filter(
-                (m) => m.no !== 0,
-              ).length;
+              const totalSiswa = members.filter((m) => m.no !== 0).length;
               const targetTotal = totalSiswa * KAS_MINGGUAN_AMOUNT;
-              const persentase = targetTotal > 0 ? Math.round(
-                (totalTerkumpul / targetTotal) * 100,
-              ) : 0;
+              const persentase =
+                targetTotal > 0
+                  ? Math.round((totalTerkumpul / targetTotal) * 100)
+                  : 0;
 
               // ANIMATION CLASS berdasarkan persentase
               const isComplete = persentase >= 100;
@@ -297,21 +338,41 @@ const CekBayarTab = ({
 
                   {/* CELEBRATION MESSAGE — with particles */}
                   {isComplete && (
-                    <div ref={celebrationRef} className="mt-3 relative overflow-hidden rounded-xl">
+                    <div
+                      ref={celebrationRef}
+                      className="mt-3 relative overflow-hidden rounded-xl"
+                    >
                       {/* Animated gradient background */}
                       <div className="absolute inset-0 bg-gradient-to-r from-green-400 via-emerald-400 to-teal-400 cb-shimmer-bg" />
-                      
+
                       {/* Floating particles */}
                       <div className="absolute inset-0 pointer-events-none overflow-hidden">
                         {[...Array(12)].map((_, i) => (
-                          <div key={i} className={`absolute cb-particle cb-particle-${i % 4}`}
+                          <div
+                            key={i}
+                            className={`absolute cb-particle cb-particle-${i % 4}`}
                             style={{
-                              left: `${8 + (i * 7.5)}%`,
+                              left: `${8 + i * 7.5}%`,
                               animationDelay: `${i * 0.3}s`,
-                              fontSize: ['8px','6px','10px','7px'][i % 4],
+                              fontSize: ["8px", "6px", "10px", "7px"][i % 4],
                             }}
                           >
-                            {['✦','●','✧','★','◆','♦','✦','●','✧','★','◆','♦'][i]}
+                            {
+                              [
+                                "✦",
+                                "●",
+                                "✧",
+                                "★",
+                                "◆",
+                                "♦",
+                                "✦",
+                                "●",
+                                "✧",
+                                "★",
+                                "◆",
+                                "♦",
+                              ][i]
+                            }
                           </div>
                         ))}
                       </div>
@@ -322,13 +383,32 @@ const CekBayarTab = ({
                           <span className="text-xl">🏆</span>
                         </div>
                         <div className="text-white">
-                          <div className="font-black text-sm tracking-wide cb-text-glow">TARGET TERCAPAI!</div>
-                          <div className="text-xs text-white/80 font-medium">Semua pembayaran minggu ini sudah terkumpul</div>
+                          <div className="font-black text-sm tracking-wide cb-text-glow">
+                            TARGET TERCAPAI!
+                          </div>
+                          <div className="text-xs text-white/80 font-medium">
+                            Semua pembayaran minggu ini sudah terkumpul
+                          </div>
                         </div>
                         <div className="ml-auto flex gap-1">
-                          <span className="cb-sparkle-float" style={{animationDelay:'0s'}}>✨</span>
-                          <span className="cb-sparkle-float" style={{animationDelay:'0.5s'}}>🎉</span>
-                          <span className="cb-sparkle-float" style={{animationDelay:'1s'}}>⭐</span>
+                          <span
+                            className="cb-sparkle-float"
+                            style={{ animationDelay: "0s" }}
+                          >
+                            ✨
+                          </span>
+                          <span
+                            className="cb-sparkle-float"
+                            style={{ animationDelay: "0.5s" }}
+                          >
+                            🎉
+                          </span>
+                          <span
+                            className="cb-sparkle-float"
+                            style={{ animationDelay: "1s" }}
+                          >
+                            ⭐
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -363,9 +443,7 @@ const CekBayarTab = ({
                       </div>
                       <div className="font-bold text-orange-600 text-base sm:text-lg">
                         Rp{" "}
-                        {(
-                          targetTotal - totalTerkumpul
-                        ).toLocaleString("id-ID")}
+                        {(targetTotal - totalTerkumpul).toLocaleString("id-ID")}
                       </div>
                     </div>
                   </div>
@@ -443,9 +521,9 @@ const CekBayarTab = ({
                     </div>
                     <div className="text-xs text-gray-600 mt-1">
                       Rp
-                      {(
-                        countBelum * KAS_MINGGUAN_AMOUNT
-                      ).toLocaleString("id-ID")}
+                      {(countBelum * KAS_MINGGUAN_AMOUNT).toLocaleString(
+                        "id-ID",
+                      )}
                     </div>
                   </div>
                 </div>
@@ -532,9 +610,7 @@ const CekBayarTab = ({
               {members
                 .filter((m) => m.no !== 0)
                 .filter((m) =>
-                  m.nama
-                    .toLowerCase()
-                    .includes(memberSearch.toLowerCase()),
+                  m.nama.toLowerCase().includes(memberSearch.toLowerCase()),
                 )
                 .map((member) => {
                   const key = `${selectedCekWeek}-${member.no}`;
@@ -546,9 +622,7 @@ const CekBayarTab = ({
                     member.no,
                   );
                   const cicilanList =
-                    cicilan[
-                      `kas-${selectedCekWeek}-${member.no}`
-                    ] || [];
+                    cicilan[`kas-${selectedCekWeek}-${member.no}`] || [];
 
                   let status = "belum";
                   let statusLabel = "Belum";
@@ -557,16 +631,21 @@ const CekBayarTab = ({
                   let detailText = "";
 
                   // 🛡️ SMART LOGIC: Handle Disabled Week
-                  const isWeekDisabled =
-                    disabledWeeks[selectedCekWeek];
+                  const isWeekDisabled = disabledWeeks[selectedCekWeek];
 
                   // Cek carry-forward: minggu ini di-cover deposit dari minggu libur?
-                  const carryInfo = depositCarryForward.carryMap[`${selectedCekWeek}-${member.no}`];
+                  const carryInfo =
+                    depositCarryForward.carryMap[
+                      `${selectedCekWeek}-${member.no}`
+                    ];
 
                   if (isLunas) {
                     if (isWeekDisabled) {
                       // SKENARIO: Sudah Bayar tapi Libur (DEPOSIT)
-                      const depositTarget = depositCarryForward.depositSourceMap[`${selectedCekWeek}-${member.no}`];
+                      const depositTarget =
+                        depositCarryForward.depositSourceMap[
+                          `${selectedCekWeek}-${member.no}`
+                        ];
                       status = "deposit";
                       statusLabel = "Deposit";
                       statusColor =
@@ -580,8 +659,7 @@ const CekBayarTab = ({
                     } else {
                       status = "lunas";
                       statusLabel = "Lunas";
-                      statusColor =
-                        "bg-green-500 hover:bg-green-600";
+                      statusColor = "bg-green-500 hover:bg-green-600";
                       StatusIcon = CheckCircle;
                       if (cicilanList.length > 0) {
                         detailText = `Lunas via cicilan (${cicilanList.length}x bayar)`;
@@ -599,8 +677,7 @@ const CekBayarTab = ({
                   } else if (totalCicilan > 0) {
                     status = "cicil";
                     statusLabel = "Cicil";
-                    statusColor =
-                      "bg-yellow-500 hover:bg-yellow-600";
+                    statusColor = "bg-yellow-500 hover:bg-yellow-600";
                     StatusIcon = HalfCircle;
                     const sisa = KAS_MINGGUAN_AMOUNT - totalCicilan;
                     detailText = `Terbayar: Rp ${totalCicilan.toLocaleString(
@@ -615,14 +692,10 @@ const CekBayarTab = ({
                     StatusIcon = ({ size }) => (
                       <LucideIcon name="Ban" size={size} />
                     );
-                    detailText =
-                      "Minggu ini dinonaktifkan (Bebas Tagihan).";
+                    detailText = "Minggu ini dinonaktifkan (Bebas Tagihan).";
                   }
 
-                  if (
-                    filterStatus !== "semua" &&
-                    status !== filterStatus
-                  ) {
+                  if (filterStatus !== "semua" && status !== filterStatus) {
                     return null;
                   }
 
@@ -637,9 +710,7 @@ const CekBayarTab = ({
                         <div className="flex items-center gap-3 flex-1 min-w-0">
                           <div
                             className={`w-3 h-3 rounded-full flex-shrink-0 ${
-                              member.jk === "L"
-                                ? "bg-blue-500"
-                                : "bg-pink-500"
+                              member.jk === "L" ? "bg-blue-500" : "bg-pink-500"
                             }`}
                           />
                           <div className="flex-1 min-w-0">
@@ -651,10 +722,7 @@ const CekBayarTab = ({
                                   className="bg-yellow-100 text-yellow-700 px-1.5 py-0.5 rounded text-[10px] font-bold flex items-center gap-1 border border-yellow-200"
                                   title={`Lunas dari deposit Minggu ${carryInfo.fromWeek}`}
                                 >
-                                  <LucideIcon
-                                    name="PiggyBank"
-                                    size={10}
-                                  />
+                                  <LucideIcon name="PiggyBank" size={10} />
                                   <span>Deposit M{carryInfo.fromWeek}</span>
                                 </div>
                               )}
@@ -681,8 +749,7 @@ const CekBayarTab = ({
                                     />
                                   ),
                                   type: "warning",
-                                  confirmText:
-                                    "Ya, Catat Pembayaran",
+                                  confirmText: "Ya, Catat Pembayaran",
                                   cancelText: "Batal",
                                   onConfirm: () => {
                                     handleToggleConfirm(
@@ -704,9 +771,7 @@ const CekBayarTab = ({
                             }}
                             disabled={isToggling}
                             className={`px-3 sm:px-4 py-2 rounded-lg text-xs font-bold transition-all shadow-md text-white flex items-center gap-1 ${statusColor} ${
-                              isToggling
-                                ? "opacity-50 cursor-not-allowed"
-                                : ""
+                              isToggling ? "opacity-50 cursor-not-allowed" : ""
                             }`}
                           >
                             <StatusIcon size={14} />
@@ -716,22 +781,27 @@ const CekBayarTab = ({
                           </button>
 
                           {/* Quick Cicil Button - hanya untuk belum/cicil */}
-                          {(status === "belum" || status === "cicil") && !isWeekDisabled && (
-                            <button
-                              onClick={() => {
-                                const qKey = `kas-${selectedCekWeek}-${member.no}`;
-                                if (quickCicilOpen === qKey) {
-                                  closeQuickCicil();
-                                } else {
-                                  openQuickCicil(qKey);
-                                }
-                              }}
-                              className="p-2 bg-orange-100 hover:bg-orange-200 rounded-lg transition-colors"
-                              title="Quick Cicil"
-                            >
-                              <LucideIcon name="Banknote" size={16} className="text-orange-600" />
-                            </button>
-                          )}
+                          {(status === "belum" || status === "cicil") &&
+                            !isWeekDisabled && (
+                              <button
+                                onClick={() => {
+                                  const qKey = `kas-${selectedCekWeek}-${member.no}`;
+                                  if (quickCicilOpen === qKey) {
+                                    closeQuickCicil();
+                                  } else {
+                                    openQuickCicil(qKey);
+                                  }
+                                }}
+                                className="p-2 bg-orange-100 hover:bg-orange-200 rounded-lg transition-colors"
+                                title="Quick Cicil"
+                              >
+                                <LucideIcon
+                                  name="Banknote"
+                                  size={16}
+                                  className="text-orange-600"
+                                />
+                              </button>
+                            )}
 
                           {(cicilanList.length > 0 || isLunas) && (
                             <button
@@ -757,41 +827,68 @@ const CekBayarTab = ({
                       )}
 
                       {/* Quick Cicil Inline Form */}
-                      {quickCicilOpen === `kas-${selectedCekWeek}-${member.no}` && (
+                      {quickCicilOpen ===
+                        `kas-${selectedCekWeek}-${member.no}` && (
                         <div className="mt-3 bg-orange-50 rounded-lg p-3 border-2 border-orange-300">
                           <div className="flex items-center gap-2 mb-2">
-                            <LucideIcon name="Banknote" size={14} className="text-orange-600" />
-                            <span className="text-xs font-bold text-orange-700">Quick Cicil — {member.nama}</span>
-                            <span className="text-xs text-orange-500 ml-1">Minggu {selectedCekWeek}</span>
+                            <LucideIcon
+                              name="Banknote"
+                              size={14}
+                              className="text-orange-600"
+                            />
+                            <span className="text-xs font-bold text-orange-700">
+                              Quick Cicil — {member.nama}
+                            </span>
+                            <span className="text-xs text-orange-500 ml-1">
+                              Minggu {selectedCekWeek}
+                            </span>
                           </div>
                           <div className="flex gap-2 items-end">
                             <div className="flex-1">
-                              <label className="text-xs text-gray-600 mb-1 block">Jumlah (Rp)</label>
+                              <label className="text-xs text-gray-600 mb-1 block">
+                                Jumlah (Rp)
+                              </label>
                               <input
                                 type="number"
                                 min="1"
                                 placeholder={`Maks Rp ${(KAS_MINGGUAN_AMOUNT - totalCicilan).toLocaleString("id-ID")}`}
                                 value={quickCicilAmount}
-                                onChange={(e) => setQuickCicilAmount(e.target.value)}
+                                onChange={(e) =>
+                                  setQuickCicilAmount(e.target.value)
+                                }
                                 className="w-full p-2 border border-orange-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none"
                                 autoFocus
                               />
                             </div>
                             <div className="flex-1">
-                              <label className="text-xs text-gray-600 mb-1 block">Keterangan (opsional)</label>
+                              <label className="text-xs text-gray-600 mb-1 block">
+                                Keterangan (opsional)
+                              </label>
                               <input
                                 type="text"
                                 placeholder="Catatan..."
                                 value={quickCicilKet}
-                                onChange={(e) => setQuickCicilKet(e.target.value)}
+                                onChange={(e) =>
+                                  setQuickCicilKet(e.target.value)
+                                }
                                 className="w-full p-2 border border-orange-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-400 outline-none"
                               />
                             </div>
                           </div>
                           <div className="flex gap-2 mt-2">
                             <button
-                              onClick={() => submitQuickCicil("kas", null, selectedCekWeek, member.no)}
-                              disabled={!quickCicilAmount || Number(quickCicilAmount) <= 0}
+                              onClick={() =>
+                                submitQuickCicil(
+                                  "kas",
+                                  null,
+                                  selectedCekWeek,
+                                  member.no,
+                                )
+                              }
+                              disabled={
+                                !quickCicilAmount ||
+                                Number(quickCicilAmount) <= 0
+                              }
                               className="flex-1 py-2 bg-orange-500 hover:bg-orange-600 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-bold rounded-lg transition-colors"
                             >
                               Simpan Cicilan
@@ -819,9 +916,7 @@ const CekBayarTab = ({
                               {totalCicilan > 0 && (
                                 <span className="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded">
                                   Total: Rp{" "}
-                                  {totalCicilan.toLocaleString(
-                                    "id-ID",
-                                  )}
+                                  {totalCicilan.toLocaleString("id-ID")}
                                 </span>
                               )}
                             </div>
@@ -844,10 +939,7 @@ const CekBayarTab = ({
                                       )}
                                     </div>
                                     <div className="font-bold text-green-600 text-sm ml-3">
-                                      +Rp{" "}
-                                      {c.amount.toLocaleString(
-                                        "id-ID",
-                                      )}
+                                      +Rp {c.amount.toLocaleString("id-ID")}
                                     </div>
                                   </div>
                                 ))}
@@ -877,9 +969,7 @@ const CekBayarTab = ({
                       members.filter(
                         (m) =>
                           m.no !== 0 &&
-                          kasMingguan[
-                            `${selectedCekWeek}-${m.no}`
-                          ] === true,
+                          kasMingguan[`${selectedCekWeek}-${m.no}`] === true,
                       ).length
                     }
                   </div>
@@ -894,9 +984,7 @@ const CekBayarTab = ({
                       members.filter((m) => {
                         if (m.no === 0) return false;
                         const isLunas =
-                          kasMingguan[
-                            `${selectedCekWeek}-${m.no}`
-                          ] === true;
+                          kasMingguan[`${selectedCekWeek}-${m.no}`] === true;
                         const totalCicilan = getTotalCicilan(
                           "kas",
                           null,
@@ -918,9 +1006,7 @@ const CekBayarTab = ({
                       members.filter((m) => {
                         if (m.no === 0) return false;
                         const isLunas =
-                          kasMingguan[
-                            `${selectedCekWeek}-${m.no}`
-                          ] === true;
+                          kasMingguan[`${selectedCekWeek}-${m.no}`] === true;
                         const totalCicilan = getTotalCicilan(
                           "kas",
                           null,
@@ -1023,13 +1109,12 @@ const CekBayarTab = ({
                   return sum + totalBayar;
                 }, 0);
 
-              const totalSiswa = members.filter(
-                (m) => m.no !== 0,
-              ).length;
+              const totalSiswa = members.filter((m) => m.no !== 0).length;
               const targetTotal = totalSiswa * selectedIuran.amount;
-              const persentase = targetTotal > 0 ? Math.round(
-                (totalTerkumpul / targetTotal) * 100,
-              ) : 0;
+              const persentase =
+                targetTotal > 0
+                  ? Math.round((totalTerkumpul / targetTotal) * 100)
+                  : 0;
 
               return (
                 <>
@@ -1042,8 +1127,7 @@ const CekBayarTab = ({
                       </h3>
                       {selectedIuran.deadline && (
                         <div className="text-xs font-semibold text-indigo-700 bg-indigo-100 px-3 py-1 rounded-full w-fit">
-                          Deadline:{" "}
-                          {_formatDateShort(selectedIuran.deadline)}
+                          Deadline: {_formatDateShort(selectedIuran.deadline)}
                         </div>
                       )}
                     </div>
@@ -1070,34 +1154,24 @@ const CekBayarTab = ({
 
                     <div className="grid grid-cols-3 gap-2">
                       <div className="bg-white rounded-lg p-2 shadow-sm">
-                        <div className="text-xs text-gray-600">
-                          Target/Org
-                        </div>
+                        <div className="text-xs text-gray-600">Target/Org</div>
                         <div className="font-bold text-indigo-700 text-xs sm:text-sm">
-                          Rp{" "}
-                          {selectedIuran.amount.toLocaleString(
-                            "id-ID",
-                          )}
+                          Rp {selectedIuran.amount.toLocaleString("id-ID")}
                         </div>
                       </div>
                       <div className="bg-white rounded-lg p-2 shadow-sm">
-                        <div className="text-xs text-gray-600">
-                          Terkumpul
-                        </div>
+                        <div className="text-xs text-gray-600">Terkumpul</div>
                         <div className="font-bold text-green-600 text-xs sm:text-sm">
-                          Rp{" "}
-                          {totalTerkumpul.toLocaleString("id-ID")}
+                          Rp {totalTerkumpul.toLocaleString("id-ID")}
                         </div>
                       </div>
                       <div className="bg-white rounded-lg p-2 shadow-sm">
-                        <div className="text-xs text-gray-600">
-                          Sisa
-                        </div>
+                        <div className="text-xs text-gray-600">Sisa</div>
                         <div className="font-bold text-orange-600 text-xs sm:text-sm">
                           Rp{" "}
-                          {(
-                            targetTotal - totalTerkumpul
-                          ).toLocaleString("id-ID")}
+                          {(targetTotal - totalTerkumpul).toLocaleString(
+                            "id-ID",
+                          )}
                         </div>
                       </div>
                     </div>
@@ -1115,8 +1189,7 @@ const CekBayarTab = ({
                         .filter((m) => m.no !== 0)
                         .forEach((member) => {
                           const paymentKey = `${selectedIuran.id}-${member.no}`;
-                          const isLunas =
-                            payments[paymentKey] === true;
+                          const isLunas = payments[paymentKey] === true;
 
                           if (isLunas) {
                             countLunas++;
@@ -1164,9 +1237,7 @@ const CekBayarTab = ({
                             </div>
                             <div className="text-xs text-yellow-600 mt-0.5">
                               Rp
-                              {nominalCicilan.toLocaleString(
-                                "id-ID",
-                              )}
+                              {nominalCicilan.toLocaleString("id-ID")}
                             </div>
                           </div>
 
@@ -1206,9 +1277,7 @@ const CekBayarTab = ({
                         }`}
                       >
                         <Users size={14} />
-                        <span className="hidden sm:inline">
-                          Semua
-                        </span>
+                        <span className="hidden sm:inline">Semua</span>
                       </button>
                       <button
                         onClick={() => setFilterStatus("lunas")}
@@ -1219,9 +1288,7 @@ const CekBayarTab = ({
                         }`}
                       >
                         <CheckCircle size={14} />
-                        <span className="hidden sm:inline">
-                          Lunas
-                        </span>
+                        <span className="hidden sm:inline">Lunas</span>
                       </button>
                       <button
                         onClick={() => setFilterStatus("cicil")}
@@ -1232,9 +1299,7 @@ const CekBayarTab = ({
                         }`}
                       >
                         <HalfCircle size={14} />
-                        <span className="hidden sm:inline">
-                          Cicil
-                        </span>
+                        <span className="hidden sm:inline">Cicil</span>
                       </button>
                       <button
                         onClick={() => setFilterStatus("belum")}
@@ -1245,9 +1310,7 @@ const CekBayarTab = ({
                         }`}
                       >
                         <XCircle size={14} />
-                        <span className="hidden sm:inline">
-                          Belum
-                        </span>
+                        <span className="hidden sm:inline">Belum</span>
                       </button>
                     </div>
                   </div>
@@ -1291,22 +1354,19 @@ const CekBayarTab = ({
                             member.no,
                           );
                           const cicilanList =
-                            cicilan[
-                              `iuran-${selectedIuran.id}-${member.no}`
-                            ] || [];
+                            cicilan[`iuran-${selectedIuran.id}-${member.no}`] ||
+                            [];
 
                           let status = "belum";
                           let statusLabel = "Belum";
-                          let statusColor =
-                            "bg-red-500 hover:bg-red-600";
+                          let statusColor = "bg-red-500 hover:bg-red-600";
                           let StatusIcon = XCircle;
                           let detailText = "";
 
                           if (isLunas) {
                             status = "lunas";
                             statusLabel = "Lunas";
-                            statusColor =
-                              "bg-green-500 hover:bg-green-600";
+                            statusColor = "bg-green-500 hover:bg-green-600";
                             StatusIcon = CheckCircle;
                             if (cicilanList.length > 0) {
                               detailText = `Lunas via cicilan (${cicilanList.length}x bayar)`;
@@ -1316,16 +1376,12 @@ const CekBayarTab = ({
                           } else if (totalCicilan > 0) {
                             status = "cicil";
                             statusLabel = "Cicil";
-                            statusColor =
-                              "bg-yellow-500 hover:bg-yellow-600";
+                            statusColor = "bg-yellow-500 hover:bg-yellow-600";
                             StatusIcon = HalfCircle;
-                            const sisa =
-                              selectedIuran.amount - totalCicilan;
+                            const sisa = selectedIuran.amount - totalCicilan;
                             detailText = `Terbayar: Rp ${totalCicilan.toLocaleString(
                               "id-ID",
-                            )} | Sisa: Rp ${sisa.toLocaleString(
-                              "id-ID",
-                            )}`;
+                            )} | Sisa: Rp ${sisa.toLocaleString("id-ID")}`;
                           }
 
                           if (
@@ -1385,7 +1441,8 @@ const CekBayarTab = ({
                                   </button>
 
                                   {/* Quick Cicil Button - iuran */}
-                                  {(status === "belum" || status === "cicil") && (
+                                  {(status === "belum" ||
+                                    status === "cicil") && (
                                     <button
                                       onClick={() => {
                                         const qKey = `iuran-${selectedIuran.id}-${member.no}`;
@@ -1395,20 +1452,22 @@ const CekBayarTab = ({
                                           openQuickCicil(qKey);
                                         }
                                       }}
-                                      className="p-2 bg-orange-100 hover:bg-orange-200 rounded-lg transition-colors"
+                                      className="px-2.5 sm:px-3 py-2 rounded-lg text-xs font-bold shadow-md text-white flex items-center gap-1 bg-orange-100 hover:bg-orange-200 rounded-lg transition-color"
                                       title="Quick Cicil"
                                     >
-                                      <LucideIcon name="Banknote" size={16} className="text-orange-600" />
+                                      <LucideIcon
+                                        name="Banknote"
+                                        size={16}
+                                        className="text-orange-600"
+                                      />
                                     </button>
                                   )}
 
-                                  {(cicilanList.length > 0 ||
-                                    isLunas) && (
+                                  {(cicilanList.length > 0 || isLunas) && (
                                     <button
                                       onClick={() => {
                                         setSelectedMemberView(
-                                          selectedMemberView ===
-                                            viewKey
+                                          selectedMemberView === viewKey
                                             ? null
                                             : viewKey,
                                         );
@@ -1428,41 +1487,68 @@ const CekBayarTab = ({
                               )}
 
                               {/* Quick Cicil Inline Form - iuran */}
-                              {quickCicilOpen === `iuran-${selectedIuran.id}-${member.no}` && (
+                              {quickCicilOpen ===
+                                `iuran-${selectedIuran.id}-${member.no}` && (
                                 <div className="mt-3 bg-orange-50 rounded-lg p-3 border-2 border-orange-300">
                                   <div className="flex items-center gap-2 mb-2">
-                                    <LucideIcon name="Banknote" size={14} className="text-orange-600" />
-                                    <span className="text-xs font-bold text-orange-700">Quick Cicil — {member.nama}</span>
-                                    <span className="text-xs text-orange-500 ml-1">{selectedIuran.name}</span>
+                                    <LucideIcon
+                                      name="Banknote"
+                                      size={14}
+                                      className="text-orange-600"
+                                    />
+                                    <span className="text-xs font-bold text-orange-700">
+                                      Quick Cicil — {member.nama}
+                                    </span>
+                                    <span className="text-xs text-orange-500 ml-1">
+                                      {selectedIuran.name}
+                                    </span>
                                   </div>
                                   <div className="flex gap-2 items-end">
                                     <div className="flex-1">
-                                      <label className="text-xs text-gray-600 mb-1 block">Jumlah (Rp)</label>
+                                      <label className="text-xs text-gray-600 mb-1 block">
+                                        Jumlah (Rp)
+                                      </label>
                                       <input
                                         type="number"
                                         min="1"
                                         placeholder={`Maks Rp ${(selectedIuran.amount - totalCicilan).toLocaleString("id-ID")}`}
                                         value={quickCicilAmount}
-                                        onChange={(e) => setQuickCicilAmount(e.target.value)}
+                                        onChange={(e) =>
+                                          setQuickCicilAmount(e.target.value)
+                                        }
                                         className="w-full p-2 border border-orange-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none"
                                         autoFocus
                                       />
                                     </div>
                                     <div className="flex-1">
-                                      <label className="text-xs text-gray-600 mb-1 block">Keterangan (opsional)</label>
+                                      <label className="text-xs text-gray-600 mb-1 block">
+                                        Keterangan (opsional)
+                                      </label>
                                       <input
                                         type="text"
                                         placeholder="Catatan..."
                                         value={quickCicilKet}
-                                        onChange={(e) => setQuickCicilKet(e.target.value)}
+                                        onChange={(e) =>
+                                          setQuickCicilKet(e.target.value)
+                                        }
                                         className="w-full p-2 border border-orange-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-400 outline-none"
                                       />
                                     </div>
                                   </div>
                                   <div className="flex gap-2 mt-2">
                                     <button
-                                      onClick={() => submitQuickCicil("iuran", selectedIuran.id, null, member.no)}
-                                      disabled={!quickCicilAmount || Number(quickCicilAmount) <= 0}
+                                      onClick={() =>
+                                        submitQuickCicil(
+                                          "iuran",
+                                          selectedIuran.id,
+                                          null,
+                                          member.no,
+                                        )
+                                      }
+                                      disabled={
+                                        !quickCicilAmount ||
+                                        Number(quickCicilAmount) <= 0
+                                      }
                                       className="flex-1 py-2 bg-orange-500 hover:bg-orange-600 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-bold rounded-lg transition-colors"
                                     >
                                       Simpan Cicilan
@@ -1478,8 +1564,7 @@ const CekBayarTab = ({
                               )}
 
                               {selectedMemberView === viewKey &&
-                                (cicilanList.length > 0 ||
-                                  isLunas) && (
+                                (cicilanList.length > 0 || isLunas) && (
                                   <div className="mt-3 bg-white rounded-lg p-3 border-2 border-indigo-300 shadow-inner">
                                     <div className="flex items-center justify-between mb-2">
                                       <h4 className="font-semibold text-xs text-indigo-700 flex items-center gap-1">
@@ -1491,46 +1576,38 @@ const CekBayarTab = ({
                                       {totalCicilan > 0 && (
                                         <span className="text-xs font-bold text-indigo-600 bg-indigo-100 px-2 py-1 rounded">
                                           Total: Rp{" "}
-                                          {totalCicilan.toLocaleString(
-                                            "id-ID",
-                                          )}
+                                          {totalCicilan.toLocaleString("id-ID")}
                                         </span>
                                       )}
                                     </div>
 
                                     {cicilanList.length > 0 ? (
                                       <div className="space-y-1 max-h-48 overflow-y-auto">
-                                        {cicilanList.map(
-                                          (c, idx) => (
-                                            <div
-                                              key={c.id}
-                                              className="flex justify-between items-start py-2 border-b border-indigo-100 last:border-0"
-                                            >
-                                              <div className="flex-1">
-                                                <div className="font-semibold text-xs text-gray-800">
-                                                  #{idx + 1} -{" "}
-                                                  {c.date}
+                                        {cicilanList.map((c, idx) => (
+                                          <div
+                                            key={c.id}
+                                            className="flex justify-between items-start py-2 border-b border-indigo-100 last:border-0"
+                                          >
+                                            <div className="flex-1">
+                                              <div className="font-semibold text-xs text-gray-800">
+                                                #{idx + 1} - {c.date}
+                                              </div>
+                                              {c.keterangan && (
+                                                <div className="text-gray-600 text-xs mt-1 italic">
+                                                  "{c.keterangan}"
                                                 </div>
-                                                {c.keterangan && (
-                                                  <div className="text-gray-600 text-xs mt-1 italic">
-                                                    "{c.keterangan}"
-                                                  </div>
-                                                )}
-                                              </div>
-                                              <div className="font-bold text-green-600 text-sm ml-3">
-                                                +Rp{" "}
-                                                {c.amount.toLocaleString(
-                                                  "id-ID",
-                                                )}
-                                              </div>
+                                              )}
                                             </div>
-                                          ),
-                                        )}
+                                            <div className="font-bold text-green-600 text-sm ml-3">
+                                              +Rp{" "}
+                                              {c.amount.toLocaleString("id-ID")}
+                                            </div>
+                                          </div>
+                                        ))}
                                       </div>
                                     ) : (
                                       <div className="text-center py-2 text-xs text-gray-600">
-                                        ✓ Dibayar langsung tanpa
-                                        cicilan
+                                        ✓ Dibayar langsung tanpa cicilan
                                       </div>
                                     )}
                                   </div>
@@ -1553,9 +1630,8 @@ const CekBayarTab = ({
                               members.filter(
                                 (m) =>
                                   m.no !== 0 &&
-                                  payments[
-                                    `${selectedIuran.id}-${m.no}`
-                                  ] === true,
+                                  payments[`${selectedIuran.id}-${m.no}`] ===
+                                    true,
                               ).length
                             }
                           </div>
@@ -1570,16 +1646,14 @@ const CekBayarTab = ({
                               members.filter((m) => {
                                 if (m.no === 0) return false;
                                 const isLunas =
-                                  payments[
-                                    `${selectedIuran.id}-${m.no}`
-                                  ] === true;
-                                const totalCicilan =
-                                  getTotalCicilan(
-                                    "iuran",
-                                    selectedIuran.id,
-                                    null,
-                                    m.no,
-                                  );
+                                  payments[`${selectedIuran.id}-${m.no}`] ===
+                                  true;
+                                const totalCicilan = getTotalCicilan(
+                                  "iuran",
+                                  selectedIuran.id,
+                                  null,
+                                  m.no,
+                                );
                                 return !isLunas && totalCicilan > 0;
                               }).length
                             }
@@ -1595,19 +1669,15 @@ const CekBayarTab = ({
                               members.filter((m) => {
                                 if (m.no === 0) return false;
                                 const isLunas =
-                                  payments[
-                                    `${selectedIuran.id}-${m.no}`
-                                  ] === true;
-                                const totalCicilan =
-                                  getTotalCicilan(
-                                    "iuran",
-                                    selectedIuran.id,
-                                    null,
-                                    m.no,
-                                  );
-                                return (
-                                  !isLunas && totalCicilan === 0
+                                  payments[`${selectedIuran.id}-${m.no}`] ===
+                                  true;
+                                const totalCicilan = getTotalCicilan(
+                                  "iuran",
+                                  selectedIuran.id,
+                                  null,
+                                  m.no,
                                 );
+                                return !isLunas && totalCicilan === 0;
                               }).length
                             }
                           </div>
