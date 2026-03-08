@@ -4856,15 +4856,15 @@ const App = () => {
         >
           <div
             style={{
-              background: "rgba(255, 255, 255, 0.95)",
+              background: "rgba(26, 32, 53, 0.97)",
               WebkitBackdropFilter: "blur(20px)",
               backdropFilter: "blur(20px)",
               borderRadius: "24px",
               padding: "32px",
               maxWidth: "480px",
               width: "100%",
-              boxShadow: "0 20px 60px rgba(0, 0, 0, 0.3)",
-              border: "1px solid rgba(255, 255, 255, 0.3)",
+              boxShadow: "0 20px 60px rgba(0, 0, 0, 0.5)",
+              border: "1px solid rgba(255, 255, 255, 0.08)",
               animation: "modalSlideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
               position: "relative",
             }}
@@ -4895,7 +4895,7 @@ const App = () => {
             <p
               style={{
                 fontSize: "15px",
-                color: "#4b5563",
+                color: "#b0b8c8",
                 textAlign: "center",
                 lineHeight: "1.6",
                 marginBottom: "28px",
@@ -4917,19 +4917,21 @@ const App = () => {
                     width: "100%",
                     padding: "12px 16px",
                     borderRadius: "12px",
-                    border: "2px solid #e5e7eb",
+                    border: "2px solid #2a3246",
                     fontSize: "16px",
                     textAlign: "center",
                     outline: "none",
                     transition: "all 0.2s",
+                    background: "#151a28",
+                    color: "#e4e7ed",
                   }}
                   onFocus={(e) => (e.target.style.borderColor = "#3b82f6")}
-                  onBlur={(e) => (e.target.style.borderColor = "#e5e7eb")}
+                  onBlur={(e) => (e.target.style.borderColor = "#2a3246")}
                 />
                 <p
                   style={{
                     fontSize: "12px",
-                    color: "#6b7280",
+                    color: "#8892a5",
                     textAlign: "center",
                     marginTop: "8px",
                   }}
@@ -4965,7 +4967,7 @@ const App = () => {
                   background:
                     confirmModal.withInput &&
                     confirmInput !== confirmModal.expectedInput
-                      ? "#e5e7eb"
+                      ? "#252d42"
                       : confirmModal.type === "danger"
                         ? "linear-gradient(135deg, #dc2626, #991b1b)"
                         : "linear-gradient(135deg, #f59e0b, #d97706)",
@@ -5007,9 +5009,9 @@ const App = () => {
                 style={{
                   width: "100%",
                   padding: "16px",
-                  background: "#f3f4f6",
-                  color: "#374151",
-                  border: "2px solid #e5e7eb",
+                  background: "#1e2538",
+                  color: "#b0b8c8",
+                  border: "2px solid #2a3246",
                   borderRadius: "14px",
                   fontSize: "16px",
                   fontWeight: "600",
@@ -5034,14 +5036,14 @@ const App = () => {
                 width: "32px",
                 height: "32px",
                 borderRadius: "50%",
-                background: "#f3f4f6",
+                background: "#252d42",
                 border: "none",
                 cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 fontSize: "18px",
-                color: "#6b7280",
+                color: "#8892a5",
                 transition: "all 0.2s",
               }}
               onMouseOver={(e) => {
@@ -5049,8 +5051,8 @@ const App = () => {
                 e.currentTarget.style.color = "white";
               }}
               onMouseOut={(e) => {
-                e.currentTarget.style.background = "#f3f4f6";
-                e.currentTarget.style.color = "#6b7280";
+                e.currentTarget.style.background = "#252d42";
+                e.currentTarget.style.color = "#8892a5";
               }}
             >
               ✕
