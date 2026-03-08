@@ -35,16 +35,6 @@ const PerAnggotaTab = ({
   const [quickCicilKet, setQuickCicilKet] = React.useState("");
   const [memberSearchLocal, setMemberSearchLocal] = React.useState("");
 
-  React.useEffect(() => {
-    const id = 'peranggota-tab-styles';
-    if (!document.getElementById(id)) {
-      const style = document.createElement('style');
-      style.id = id;
-      style.textContent = `.es-float { animation: esFloat 6s ease-in-out infinite; } .es-float-alt { animation: esFloat 6s ease-in-out infinite 3s; } .es-breathe { animation: esBreathe 4s ease-in-out infinite; } .es-hint { animation: esHint 3s ease-in-out infinite; } @keyframes esFloat { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-6px) scale(1.05); } } @keyframes esBreathe { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.04); opacity: 0.9; } } @keyframes esHint { 0%, 100% { transform: translateY(0); opacity: 0.8; } 50% { transform: translateY(3px); opacity: 1; } } .pa-member-grid::-webkit-scrollbar { width: 3px; } .pa-member-grid::-webkit-scrollbar-track { background: transparent; } .pa-member-grid::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; } .pa-pulse { animation: paPulse 2s ease-in-out infinite; } @keyframes paPulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.3); } }`;
-      document.head.appendChild(style);
-    }
-  }, []);
-
   // Memoised filtered member list for the selector grid
   const filteredSelectorMembers = React.useMemo(
     () =>
@@ -1318,4 +1308,4 @@ const PerAnggotaTab = ({
   );
 };
 
-export default PerAnggotaTab;
+export default React.memo(PerAnggotaTab);

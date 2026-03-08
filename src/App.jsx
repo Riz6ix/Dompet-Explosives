@@ -2038,7 +2038,7 @@ const App = () => {
   // =========================================
   // FIXED: getTotalCicilan - Safe Return
   // =========================================
-  const getTotalCicilan = (type, iuranId, week, memberNo) => {
+  const getTotalCicilan = React.useCallback((type, iuranId, week, memberNo) => {
     let key = "";
     if (type === "kas" && week) {
       key = `kas-${week}-${memberNo}`;
@@ -2049,10 +2049,10 @@ const App = () => {
     }
     const cicilanList = cicilan[key] || [];
     return cicilanList.reduce((sum, c) => sum + c.amount, 0);
-  };
+  }, [cicilan]);
 
   // Helper: Fungsi untuk mendapatkan tanggal minggu
-  const getWeekDate = (weekNumber) => {
+  const getWeekDate = React.useCallback((weekNumber) => {
     const startDate = new Date(START_DATE_PROJECT);
     const startOfWeek = new Date(startDate);
     startOfWeek.setDate(startDate.getDate() + (weekNumber - 1) * 7);
@@ -2067,7 +2067,7 @@ const App = () => {
       year: "numeric",
     });
     return `${startStr} – ${endStr}`;
-  };
+  }, []);
 
   // Form states
   const [transactionForm, setTransactionForm] = React.useState({
@@ -2824,7 +2824,7 @@ const App = () => {
   // =========================================
   // FIXED: getPaymentStatusDetail - Complete
   // =========================================
-  const getPaymentStatusDetail = (type, targetId, week, memberNo) => {
+  const getPaymentStatusDetail = React.useCallback((type, targetId, week, memberNo) => {
     const totalCicilanVal = getTotalCicilan(type, targetId, week, memberNo);
     let targetAmount = 0;
 
@@ -2925,7 +2925,7 @@ const App = () => {
       sisa: targetAmount,
       persen: 0,
     };
-  };
+  }, [kasMingguan, payments, iuranKhusus, disabledWeeks, depositCarryForward, getTotalCicilan]);
 
   // 📄 PDF REPORT GENERATOR (V4 — Professional)
   const generatePDFReport = () => {

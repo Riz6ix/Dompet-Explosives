@@ -23,16 +23,6 @@ const IuranTab = ({
   const [showForm, setShowForm] = React.useState(false);
   const [memberFilter, setMemberFilter] = React.useState("semua"); // semua | lunas | cicil | belum
 
-  React.useEffect(() => {
-    const id = 'iuran-tab-styles';
-    if (!document.getElementById(id)) {
-      const style = document.createElement('style');
-      style.id = id;
-      style.textContent = `.it-member-scroll::-webkit-scrollbar { width: 3px; } .it-member-scroll::-webkit-scrollbar-track { background: transparent; } .it-member-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }`;
-      document.head.appendChild(style);
-    }
-  }, []);
-
   const toggleExpand = (id) => {
     setExpandedIuran((prev) => (prev === id ? null : id));
     setIuranMemberSearch("");
@@ -680,4 +670,4 @@ const IuranTab = ({
   );
 };
 
-export default IuranTab;
+export default React.memo(IuranTab);

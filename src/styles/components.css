@@ -492,3 +492,17 @@ button:active { transform: scale(0.95); }
   background-size: 1000px 100%;
   animation: shimmer 1.5s infinite;
 }
+
+/* ── Performance: Reduce animations on low-power devices ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Performance: GPU hints for animated elements ── */
+.fab, .toast-container, .animate-float, .animate-badge {
+  will-change: transform;
+}

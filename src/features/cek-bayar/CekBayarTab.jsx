@@ -61,16 +61,6 @@ const CekBayarTab = ({
   const [quickCicilAmount, setQuickCicilAmount] = React.useState("");
   const [quickCicilKet, setQuickCicilKet] = React.useState("");
 
-  React.useEffect(() => {
-    const id = 'cekbayar-tab-styles';
-    if (!document.getElementById(id)) {
-      const style = document.createElement('style');
-      style.id = id;
-      style.textContent = `.cb-shimmer-bg { background-size: 200% 100%; animation: cbShimmerBg 3s ease-in-out infinite; } @keyframes cbShimmerBg { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } } .cb-particle { color: rgba(255,255,255,0.6); position: absolute; animation: cbParticleFloat 3s ease-in-out infinite; } .cb-particle-0 { top: 10%; } .cb-particle-1 { top: 60%; } .cb-particle-2 { top: 30%; } .cb-particle-3 { top: 75%; } @keyframes cbParticleFloat { 0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; } 25% { transform: translateY(-12px) rotate(90deg); opacity: 0.8; } 50% { transform: translateY(-6px) rotate(180deg); opacity: 0.5; } 75% { transform: translateY(-16px) rotate(270deg); opacity: 0.9; } } .cb-trophy-bounce { animation: cbTrophyBounce 2s ease-in-out infinite; } @keyframes cbTrophyBounce { 0%, 100% { transform: scale(1) rotate(0deg); } 25% { transform: scale(1.1) rotate(-5deg); } 50% { transform: scale(1) rotate(0deg); } 75% { transform: scale(1.1) rotate(5deg); } } .cb-sparkle-float { display: inline-block; animation: cbSparkle 2s ease-in-out infinite; } @keyframes cbSparkle { 0%, 100% { transform: translateY(0) scale(1); opacity: 0.7; } 50% { transform: translateY(-6px) scale(1.2); opacity: 1; } } .cb-text-glow { text-shadow: 0 0 10px rgba(255,255,255,0.5); }`;
-      document.head.appendChild(style);
-    }
-  }, []);
-
   // 🎉 Confetti celebration state
   const [hasConfettiFired, setHasConfettiFired] = React.useState(null);
   const celebrationRef = React.useRef(null);
@@ -1642,4 +1632,4 @@ const CekBayarTab = ({
   );
 };
 
-export default CekBayarTab;
+export default React.memo(CekBayarTab);

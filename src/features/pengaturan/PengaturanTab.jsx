@@ -33,16 +33,6 @@ const PengaturanTab = ({
   const [editingMember, setEditingMember] = React.useState(null); // { no, nama }
   const [editName, setEditName] = React.useState("");
 
-  React.useEffect(() => {
-    const id = 'pengaturan-tab-styles';
-    if (!document.getElementById(id)) {
-      const style = document.createElement('style');
-      style.id = id;
-      style.textContent = `.pengaturan-scroll::-webkit-scrollbar { width: 3px; } .pengaturan-scroll::-webkit-scrollbar-track { background: transparent; } .pengaturan-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }`;
-      document.head.appendChild(style);
-    }
-  }, []);
-
   /* ─── Normalized input class ─── */
   const inputBase =
     "w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-gray-700 placeholder-gray-400 focus:ring-0 focus:border-indigo-500 transition-all text-sm";
@@ -866,4 +856,4 @@ const PengaturanTab = ({
   );
 };
 
-export default PengaturanTab;
+export default React.memo(PengaturanTab);

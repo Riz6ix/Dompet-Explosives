@@ -1,0 +1,137 @@
+/* ============================================
+   tab-styles.css
+   Static CSS for all tab components
+   (Moved from dynamic style injection for performance)
+   ============================================ */
+
+/* ── CekBayarTab ── */
+.cb-shimmer-bg { background-size: 200% 100%; animation: cbShimmerBg 3s ease-in-out infinite; }
+@keyframes cbShimmerBg { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+.cb-particle { color: rgba(255,255,255,0.6); position: absolute; animation: cbParticleFloat 3s ease-in-out infinite; }
+.cb-particle-0 { top: 10%; } .cb-particle-1 { top: 60%; } .cb-particle-2 { top: 30%; } .cb-particle-3 { top: 75%; }
+@keyframes cbParticleFloat { 0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; } 25% { transform: translateY(-12px) rotate(90deg); opacity: 0.8; } 50% { transform: translateY(-6px) rotate(180deg); opacity: 0.5; } 75% { transform: translateY(-16px) rotate(270deg); opacity: 0.9; } }
+.cb-trophy-bounce { animation: cbTrophyBounce 2s ease-in-out infinite; }
+@keyframes cbTrophyBounce { 0%, 100% { transform: scale(1) rotate(0deg); } 25% { transform: scale(1.1) rotate(-5deg); } 50% { transform: scale(1) rotate(0deg); } 75% { transform: scale(1.1) rotate(5deg); } }
+.cb-sparkle-float { display: inline-block; animation: cbSparkle 2s ease-in-out infinite; }
+@keyframes cbSparkle { 0%, 100% { transform: translateY(0) scale(1); opacity: 0.7; } 50% { transform: translateY(-6px) scale(1.2); opacity: 1; } }
+.cb-text-glow { text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+
+/* ── PerAnggotaTab ── */
+.es-float { animation: esFloat 6s ease-in-out infinite; }
+.es-float-alt { animation: esFloat 6s ease-in-out infinite 3s; }
+.es-breathe { animation: esBreathe 4s ease-in-out infinite; }
+.es-hint { animation: esHint 3s ease-in-out infinite; }
+@keyframes esFloat { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-6px) scale(1.05); } }
+@keyframes esBreathe { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.04); opacity: 0.9; } }
+@keyframes esHint { 0%, 100% { transform: translateY(0); opacity: 0.8; } 50% { transform: translateY(3px); opacity: 1; } }
+.pa-member-grid::-webkit-scrollbar { width: 3px; }
+.pa-member-grid::-webkit-scrollbar-track { background: transparent; }
+.pa-member-grid::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
+.pa-pulse { animation: paPulse 2s ease-in-out infinite; }
+@keyframes paPulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.3); } }
+
+/* ── Scrollbar shared (Cicilan, Iuran, Pengaturan, Transaksi) ── */
+.ct-scroll::-webkit-scrollbar,
+.it-member-scroll::-webkit-scrollbar,
+.pengaturan-scroll::-webkit-scrollbar,
+.tt-scroll::-webkit-scrollbar { width: 3px; }
+.ct-scroll::-webkit-scrollbar-track,
+.it-member-scroll::-webkit-scrollbar-track,
+.pengaturan-scroll::-webkit-scrollbar-track,
+.tt-scroll::-webkit-scrollbar-track { background: transparent; }
+.ct-scroll::-webkit-scrollbar-thumb,
+.it-member-scroll::-webkit-scrollbar-thumb,
+.pengaturan-scroll::-webkit-scrollbar-thumb,
+.tt-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
+
+/* ── DashboardTab ── */
+@keyframes exportReveal { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── QuestTab ── */
+@keyframes rainbow-border {
+  0%   { border-color: #f59e0b; box-shadow: 0 0 14px #f59e0b66; }
+  16%  { border-color: #ef4444; box-shadow: 0 0 14px #ef444466; }
+  33%  { border-color: #8b5cf6; box-shadow: 0 0 14px #8b5cf666; }
+  50%  { border-color: #3b82f6; box-shadow: 0 0 14px #3b82f666; }
+  66%  { border-color: #10b981; box-shadow: 0 0 14px #10b98166; }
+  83%  { border-color: #f59e0b; box-shadow: 0 0 14px #f59e0b66; }
+  100% { border-color: #f59e0b; box-shadow: 0 0 14px #f59e0b66; }
+}
+@keyframes xp-fill { from { width: 0%; } to { width: var(--xp-width); } }
+@keyframes glow-green-subtle {
+  0%, 100% { box-shadow: 0 0 10px rgba(16,185,129,0.3); }
+  50%       { box-shadow: 0 0 18px rgba(16,185,129,0.55); }
+}
+@keyframes gold-shimmer-subtle {
+  0%   { box-shadow: 0 0 8px rgba(245,158,11,0.3); border-color: #fbbf24; }
+  50%  { box-shadow: 0 0 20px rgba(245,158,11,0.6); border-color: #f59e0b; }
+  100% { box-shadow: 0 0 8px rgba(245,158,11,0.3); border-color: #fbbf24; }
+}
+@keyframes purple-pulse-subtle {
+  0%, 100% { box-shadow: 0 0 10px rgba(168,85,247,0.3); border-color: #a855f7; }
+  50%       { box-shadow: 0 0 22px rgba(168,85,247,0.55); border-color: #c084fc; }
+}
+.rank-glow-green { animation: glow-green-subtle 2.5s ease-in-out infinite; }
+.rank-pulse-purple { animation: purple-pulse-subtle 2.2s ease-in-out infinite; }
+.rank-shimmer-gold { animation: gold-shimmer-subtle 2.2s ease-in-out infinite; }
+.rank-rainbow { animation: rainbow-border 4s linear infinite; }
+.xp-bar-fill { animation: xp-fill 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.rank-icon-float { animation: float 3.5s ease-in-out infinite; }
+
+.quest-claim-btn {
+  background: linear-gradient(135deg, #10b981, #059669);
+  box-shadow: 0 0 10px rgba(16,185,129,0.35);
+  transition: all 0.2s;
+}
+.quest-claim-btn:hover { box-shadow: 0 0 18px rgba(16,185,129,0.6); transform: translateY(-1px); }
+.quest-claim-btn:active { transform: translateY(0) scale(0.97); }
+
+.quest-claim-btn-weekly {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  box-shadow: 0 0 10px rgba(139,92,246,0.35);
+  transition: all 0.2s;
+}
+.quest-claim-btn-weekly:hover { box-shadow: 0 0 18px rgba(139,92,246,0.6); transform: translateY(-1px); }
+.quest-claim-btn-weekly:active { transform: translateY(0) scale(0.97); }
+
+.shimmer-text {
+  background: linear-gradient(90deg, #fbbf24 0%, #fef3c7 40%, #fbbf24 60%, #fef3c7 80%, #fbbf24 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 2.4s linear infinite;
+}
+.legendary-text {
+  background: linear-gradient(90deg, #f59e0b 0%, #ef4444 25%, #8b5cf6 50%, #3b82f6 75%, #10b981 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+.claimable-glow {
+  box-shadow: 0 0 12px rgba(16,185,129,0.2), 0 1px 3px rgba(0,0,0,0.08);
+  transition: box-shadow 0.3s ease;
+}
+@keyframes xp-float-up {
+  0%   { opacity: 1; transform: translateY(0) scale(1); }
+  30%  { opacity: 1; transform: translateY(-20px) scale(1.15); }
+  100% { opacity: 0; transform: translateY(-70px) scale(0.8); }
+}
+.xp-float-item { animation: xp-float-up 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards; pointer-events: none; }
+@keyframes card-slide-up {
+  0%   { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.quest-card-appear { animation: card-slide-up 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes claim-ripple {
+  0%   { transform: scale(0.95); background-color: rgba(16,185,129,0.1); }
+  50%  { transform: scale(1); background-color: rgba(16,185,129,0.05); }
+  100% { transform: scale(1); background-color: transparent; }
+}
+.quest-claimed-ripple { animation: claim-ripple 0.5s ease-out; }
+@keyframes badge-sparkle { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.15); } }
+.achievement-unlocked { animation: badge-sparkle 3s ease-in-out infinite; }
+@keyframes fire-wiggle { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-3deg); } 75% { transform: rotate(3deg); } }
+.streak-fire { animation: fire-wiggle 2s ease-in-out infinite; display: inline-block; }

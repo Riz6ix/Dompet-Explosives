@@ -21,16 +21,6 @@ const CicilanTab = ({
   const [searchCicilan, setSearchCicilan] = React.useState("");
   const [filterCicilanType, setFilterCicilanType] = React.useState("semua"); // semua | kas | iuran
 
-  React.useEffect(() => {
-    const id = 'cicilan-tab-styles';
-    if (!document.getElementById(id)) {
-      const style = document.createElement('style');
-      style.id = id;
-      style.textContent = `.ct-scroll::-webkit-scrollbar { width: 3px; } .ct-scroll::-webkit-scrollbar-track { background: transparent; } .ct-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }`;
-      document.head.appendChild(style);
-    }
-  }, []);
-
   // Hitung total overview — memoised so Object.entries isn’t called on every render
   const { allCicilanEntries, totalCicilanAmount, totalCicilanCount } = React.useMemo(() => {
     const entries = Object.entries(cicilan).filter(([_, list]) => list && list.length > 0);
@@ -631,4 +621,4 @@ const CicilanTab = ({
   );
 };
 
-export default CicilanTab;
+export default React.memo(CicilanTab);

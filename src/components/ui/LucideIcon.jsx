@@ -1,7 +1,7 @@
 /**
  * LucideIcon.jsx
- * Wrapper component untuk render Lucide icons via CDN
- * Handles PascalCase → kebab-case conversion & icon name remapping
+ * Optimized wrapper for Lucide icons via CDN
+ * Uses icon cache to avoid re-creating icons on every render
  */
 
 import React from "react";
@@ -24,38 +24,58 @@ const iconMapping = {
   filetext: "file-text",
 };
 
-// Helper: Ubah PascalCase ke kebab-case & Handle Lucide v0.400+ Changes
+// Helper: Ubah PascalCase ke kebab-case
 const formatIconName = (str) => {
   if (!str) return "";
-  // Support full PascalCase to kebab-case (e.g. XCircle -> x-circle)
   let kebab = str
     .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
     .replace(/([A-Z])([A-Z][a-z])/g, "$1-$2")
     .toLowerCase();
-
   return iconMapping[kebab] || kebab;
 };
 
-const LucideIcon = ({ name, size = 20, className = "", color }) => {
+// SVG cache — avoid re-creating the same icon SVG repeatedly
+const svgCache = new Map();
+
+const LucideIcon = React.memo(({ name, size = 20, className = "", color }) => {
   const iconRef = React.useRef(null);
+  const prevKeyRef = React.useRef("");
 
   React.useEffect(() => {
-    if (!window.lucide) return;
+    if (!window.lucide || !iconRef.current) return;
+
+    const kebabName = formatIconName(name);
+    const cacheKey = `${kebabName}-${size}-${color || "currentColor"}`;
+
+    // Skip if same icon already rendered
+    if (prevKeyRef.current === cacheKey) return;
+    prevKeyRef.current = cacheKey;
+
     try {
-      if (iconRef.current) {
-        const kebabName = formatIconName(name);
-        iconRef.current.innerHTML = `<i data-lucide="${kebabName}" style="width:${size}px; height:${size}px;"></i>`;
-        window.lucide.createIcons({
-          attrs: {
-            class: className,
-            stroke: color || "currentColor",
-            "stroke-width": 2,
-            width: size,
-            height: size,
-          },
-          nameAttr: "data-lucide",
-          root: iconRef.current,
-        });
+      // Check cache first
+      const cached = svgCache.get(cacheKey);
+      if (cached) {
+        iconRef.current.innerHTML = cached;
+        return;
+      }
+
+      // Create new icon
+      iconRef.current.innerHTML = `<i data-lucide="${kebabName}" style="width:${size}px; height:${size}px;"></i>`;
+      window.lucide.createIcons({
+        attrs: {
+          class: className,
+          stroke: color || "currentColor",
+          "stroke-width": 2,
+          width: size,
+          height: size,
+        },
+        nameAttr: "data-lucide",
+        root: iconRef.current,
+      });
+
+      // Cache the result
+      if (iconRef.current.innerHTML && !iconRef.current.innerHTML.includes("data-lucide")) {
+        svgCache.set(cacheKey, iconRef.current.innerHTML);
       }
     } catch (e) {
       /* Silent fail */
@@ -69,6 +89,8 @@ const LucideIcon = ({ name, size = 20, className = "", color }) => {
       style={{ width: size, height: size, flexShrink: 0 }}
     />
   );
-};
+});
+
+LucideIcon.displayName = "LucideIcon";
 
 export default LucideIcon;

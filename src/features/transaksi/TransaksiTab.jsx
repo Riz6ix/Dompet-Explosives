@@ -31,16 +31,6 @@ const TransaksiTab = ({
 }) => {
   const _formatDateWithDay = formatDateWithDayProp || formatDateWithDay;
 
-  React.useEffect(() => {
-    const id = 'transaksi-tab-styles';
-    if (!document.getElementById(id)) {
-      const style = document.createElement('style');
-      style.id = id;
-      style.textContent = `.tt-scroll::-webkit-scrollbar { width: 3px; } .tt-scroll::-webkit-scrollbar-track { background: transparent; } .tt-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }`;
-      document.head.appendChild(style);
-    }
-  }, []);
-
   // Reset page when filters change
   React.useEffect(() => {
     setTransactionPage(1);
@@ -585,4 +575,4 @@ const TransaksiTab = ({
   );
 };
 
-export default TransaksiTab;
+export default React.memo(TransaksiTab);

@@ -781,4 +781,4 @@ const StatistikTab = ({
   );
 };
 
-export default StatistikTab;
+export default React.memo(StatistikTab);

@@ -36,16 +36,6 @@ const DashboardTab = ({
 }) => {
   const _formatDateWithDay = formatDateWithDayProp || formatDateWithDay;
 
-  React.useEffect(() => {
-    const id = 'dashboard-tab-styles';
-    if (!document.getElementById(id)) {
-      const style = document.createElement('style');
-      style.id = id;
-      style.textContent = `@keyframes exportReveal { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }`;
-      document.head.appendChild(style);
-    }
-  }, []);
-
   return (
     <div className="space-y-4 tab-content">
       {/* 🎮 RPG RANK WIDGET */}
@@ -468,4 +458,4 @@ const DashboardTab = ({
   );
 };
 
-export default DashboardTab;
+export default React.memo(DashboardTab);

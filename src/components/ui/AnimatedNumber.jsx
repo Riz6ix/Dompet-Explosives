@@ -82,4 +82,4 @@ const AnimatedNumber = ({ value, prefix = "Rp ", id = "num" }) => {
   );
 };
 
-export default AnimatedNumber;
+export default React.memo(AnimatedNumber);
