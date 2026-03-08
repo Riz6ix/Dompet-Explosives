@@ -11,8 +11,9 @@ import { DEFAULT_START_DATE } from "../constants/config.js";
  * @returns {number} Nomor minggu saat ini (0 = belum dimulai)
  */
 export const calculateWeek = (startDateStr) => {
-  if (!startDateStr) return 1;
+  if (!startDateStr) return 0;
   const start = new Date(startDateStr);
+  if (isNaN(start.getTime())) return 0;
   const now = new Date();
 
   // Jika sekarang belum sampai tanggal mulai, return 0 (Belum dimulai)

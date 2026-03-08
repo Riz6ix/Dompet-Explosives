@@ -65,7 +65,7 @@ const useFinanceCalculations = ({
       activeMembers.forEach((member) => {
         const key = `${iuran.id}-${member.no}`;
         if (payments[key] === true) {
-          iuranTotal += iuran.amount;
+          iuranTotal += Number(iuran.amount) || 0;
         } else {
           const cicilanKey = `iuran-${iuran.id}-${member.no}`;
           iuranTotal += (cicilan[cicilanKey] || []).reduce(

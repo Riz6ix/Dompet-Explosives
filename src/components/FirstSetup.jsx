@@ -297,13 +297,12 @@ const FirstSetup = ({ onComplete }) => {
     setAnimKey((k) => k + 1);
     setStep(nextStep);
   }, []);
-  const handleNext = () => goTo(step + 1, "right");
+  const handleNext = () => { if (step >= TOTAL_STEPS) return; goTo(step + 1, "right"); };
   const handleBack = () => goTo(step - 1, "left");
 
   const setField = (field) => (e) => {
-    // Avoid coercing empty string to 0 for number inputs
     const val = e.target.type === "number"
-      ? (e.target.value === "" ? "" : Number(e.target.value))
+      ? (e.target.value === "" ? 0 : Number(e.target.value))
       : e.target.value;
     setFormData((prev) => ({ ...prev, [field]: val }));
   };
@@ -366,6 +365,14 @@ const FirstSetup = ({ onComplete }) => {
     if (!name) {
       removeMember(editingIdx);
     } else {
+      const isDuplicate = membersList.some(
+        (m, i) => i !== editingIdx && m.toUpperCase() === name
+      );
+      if (isDuplicate) {
+        setEditingIdx(null);
+        setEditingName("");
+        return;
+      }
       setMembersList((prev) => prev.map((m, i) => (i === editingIdx ? name : m)));
     }
     setEditingIdx(null);
@@ -501,7 +508,7 @@ const FirstSetup = ({ onComplete }) => {
       <SetupInput id="appTitle" label="Nama Aplikasi" value={formData.appTitle} onChange={setField("appTitle")} placeholder="Dompet Explosives" autoFocus />
       <SetupInput id="className" label="Nama Kelas" value={formData.className} onChange={setField("className")} placeholder="XII-F5" required />
       <SetupInput id="waliKelas" label="Wali Kelas (Opsional)" value={formData.waliKelas} onChange={setField("waliKelas")} placeholder="Nama Wali Kelas" />
-      <SetupInput id="bendahara" label="Bendahara" value={formData.bendahara} onChange={setField("bendahara")} placeholder="Nama Bendahara Kelas" />
+      <SetupInput id="bendahara" label="Bendahara (Opsional)" value={formData.bendahara} onChange={setField("bendahara")} placeholder="Nama Bendahara Kelas" />
 
       <ActionBtn onClick={handleNext} disabled={!formData.className.trim()} className="mt-1">
         Lanjut →
@@ -753,10 +760,10 @@ const FirstSetup = ({ onComplete }) => {
         <div>
           <p className="text-xs text-emerald-600 font-semibold">Target Bulanan Kelas</p>
           <p className="text-base font-extrabold text-emerald-700">
-            Rp {(formData.kasAmount * 4 * membersList.length).toLocaleString("id-ID")}
+            Rp {(Number(formData.kasAmount || 0) * 4 * membersList.length).toLocaleString("id-ID")}
           </p>
           <p className="text-xs text-emerald-500">
-            {membersList.length} siswa × Rp {formData.kasAmount.toLocaleString("id-ID")} × 4 minggu
+            {membersList.length} siswa × Rp {Number(formData.kasAmount || 0).toLocaleString("id-ID")} × 4 minggu
           </p>
         </div>
       </div>

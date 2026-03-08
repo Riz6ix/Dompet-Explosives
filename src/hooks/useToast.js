@@ -9,7 +9,7 @@
  *   <Toast toast={toast} onClose={closeToast} />
  */
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 
 const useToast = () => {
   const [toast, setToast] = useState({
@@ -54,19 +54,23 @@ const useToast = () => {
   const closeToast = useCallback(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
     setToast((prev) => ({ ...prev, closing: true }));
-    setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       setToast({
         show: false,
         message: "",
         type: "success",
         closing: false,
       });
+      timerRef.current = null;
     }, 300);
   }, []);
 
-  // Cleanup on unmount
-  // (Caller doesn't need to worry about memory leaks)
-  // Note: useEffect cleanup handled internally
+  // Cleanup on unmount — prevent state updates on unmounted component
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   return { toast, showToast, closeToast };
 };

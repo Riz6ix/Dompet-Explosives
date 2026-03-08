@@ -28,6 +28,7 @@ const PerAnggotaTab = ({
   onQuickCicil,
 }) => {
   // Quick Cicil local state
+  const [selectedIuranDetail, setSelectedIuranDetail] = React.useState(null);
   const [quickCicilOpen, setQuickCicilOpen] = React.useState(null);
   const [quickCicilAmount, setQuickCicilAmount] = React.useState("");
   const [quickCicilKet, setQuickCicilKet] = React.useState("");
@@ -293,7 +294,7 @@ const PerAnggotaTab = ({
           let totalIuranBelum = 0;
 
           iuranKhusus.forEach((iuran) => {
-            const isLunas = payments[`${iuran.id}-${memberNo}`];
+            const isLunas = payments[`${iuran.id}-${memberNo}`] === true;
             const totalCicilan = getTotalCicilan(
               "iuran",
               iuran.id,
@@ -324,6 +325,14 @@ const PerAnggotaTab = ({
               totalIuranBelum += iuran.amount;
             }
           });
+
+          // KAS progress stats (computed before filter)
+          const totalActiveWeeks = kasData.length;
+          const totalLunasWeeks = kasData.filter((k) => k.isLunas).length;
+
+          // IURAN progress stats (computed before filter)
+          const totalActiveIuran = iuranData.length;
+          const totalLunasIuran = iuranData.filter((i) => i.isLunas).length;
 
           // FILTER: Only show yang belum lunas atau cicil
           const kasDataFiltered = kasData.filter((item) => !item.isLunas);
@@ -407,6 +416,21 @@ const PerAnggotaTab = ({
                     />
                     Kas Mingguan (Belum Lunas)
                   </h3>
+                  {/* Member Kas Progress */}
+                  <div className="mb-3">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-xs text-gray-500">Progress Pembayaran Kas</span>
+                      <span className="text-xs font-bold text-blue-600">
+                        {totalLunasWeeks}/{totalActiveWeeks} minggu
+                      </span>
+                    </div>
+                    <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full transition-all duration-500"
+                        style={{ width: `${totalActiveWeeks > 0 ? Math.round(totalLunasWeeks / totalActiveWeeks * 100) : 0}%` }}
+                      />
+                    </div>
+                  </div>
                   <div className="space-y-2 max-h-64 overflow-y-auto">
                     {kasDataFiltered.map((item) => (
                       <React.Fragment key={item.week}>
@@ -423,10 +447,17 @@ const PerAnggotaTab = ({
                               Minggu {item.week}
                             </div>
                             {item.cicilan > 0 && (
-                              <div className="text-xs text-gray-600 mt-1">
-                                Terbayar: Rp{" "}
-                                {item.cicilan.toLocaleString("id-ID")} • Sisa:
-                                Rp {item.sisa.toLocaleString("id-ID")}
+                              <div className="mt-2">
+                                <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                  <div
+                                    className="h-full bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full"
+                                    style={{ width: `${Math.min(100, Math.round(item.cicilan / KAS_MINGGUAN_AMOUNT * 100))}%` }}
+                                  />
+                                </div>
+                                <div className="flex justify-between mt-1">
+                                  <span className="text-[10px] text-gray-500">Terbayar: Rp {item.cicilan.toLocaleString("id-ID")}</span>
+                                  <span className="text-[10px] text-orange-600 font-semibold">Sisa: Rp {item.sisa.toLocaleString("id-ID")}</span>
+                                </div>
                               </div>
                             )}
                           </div>
@@ -572,6 +603,21 @@ const PerAnggotaTab = ({
                       />
                       Iuran (Belum Lunas)
                     </h3>
+                    {/* Member Iuran Progress */}
+                    <div className="mb-3">
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-xs text-gray-500">Progress Pembayaran Iuran</span>
+                        <span className="text-xs font-bold text-purple-600">
+                          {totalLunasIuran}/{totalActiveIuran} iuran
+                        </span>
+                      </div>
+                      <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-purple-400 to-purple-600 rounded-full transition-all duration-500"
+                          style={{ width: `${totalActiveIuran > 0 ? Math.round(totalLunasIuran / totalActiveIuran * 100) : 0}%` }}
+                        />
+                      </div>
+                    </div>
                     <div className="space-y-2">
                       {iuranDataFiltered.map((item) => (
                         <React.Fragment key={item.iuran.id}>
@@ -591,10 +637,17 @@ const PerAnggotaTab = ({
                                 Rp {item.iuran.amount.toLocaleString("id-ID")}
                               </div>
                               {item.cicilan > 0 && (
-                                <div className="text-xs text-gray-600 mt-1">
-                                  Terbayar: Rp{" "}
-                                  {item.cicilan.toLocaleString("id-ID")} • Sisa:
-                                  Rp {item.sisa.toLocaleString("id-ID")}
+                                <div className="mt-2">
+                                  <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                    <div
+                                      className="h-full bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full"
+                                      style={{ width: `${Math.min(100, Math.round(item.cicilan / item.iuran.amount * 100))}%` }}
+                                    />
+                                  </div>
+                                  <div className="flex justify-between mt-1">
+                                    <span className="text-[10px] text-gray-500">Terbayar: Rp {item.cicilan.toLocaleString("id-ID")}</span>
+                                    <span className="text-[10px] text-orange-600 font-semibold">Sisa: Rp {item.sisa.toLocaleString("id-ID")}</span>
+                                  </div>
                                 </div>
                               )}
                             </div>
@@ -853,7 +906,7 @@ const PerAnggotaTab = ({
                         .filter((m) => m.no !== 0)
                         .map((member) => {
                           const key = `${selectedIuran.id}-${member.no}`;
-                          const isLunas = payments[key];
+                          const isLunas = payments[key] === true;
                           const totalCicilan = getTotalCicilan(
                             "iuran",
                             selectedIuran.id,
@@ -936,13 +989,29 @@ const PerAnggotaTab = ({
                                     {statusLabel}
                                   </button>
 
+                                  {/* Cicil Button */}
+                                  {!isLunas && (
+                                    <button
+                                      onClick={() => {
+                                        const qKey = `iuran-${selectedIuran.id}-${member.no}`;
+                                        if (quickCicilOpen === qKey) closeQuickCicil();
+                                        else openQuickCicil(qKey);
+                                      }}
+                                      className="px-3 py-1 bg-orange-400 hover:bg-orange-500 text-white text-xs font-semibold rounded-full transition-colors flex items-center gap-1"
+                                      title="Quick Cicil"
+                                    >
+                                      <LucideIcon name="Banknote" size={12} />
+                                      Cicil
+                                    </button>
+                                  )}
+
                                   {/* Detail Button - Show jika ada cicilan */}
                                   {cicilanList.length > 0 && (
                                     <button
                                       onClick={() => {
                                         const viewKey = `iuran-${selectedIuran.id}-${member.no}`;
-                                        setSelectedMemberView(
-                                          selectedMemberView === viewKey
+                                        setSelectedIuranDetail(
+                                          selectedIuranDetail === viewKey
                                             ? null
                                             : viewKey,
                                         );
@@ -963,7 +1032,7 @@ const PerAnggotaTab = ({
                               )}
 
                               {/* Cicilan Detail Dropdown */}
-                              {selectedMemberView ===
+                              {selectedIuranDetail ===
                                 `iuran-${selectedIuran.id}-${member.no}` &&
                                 cicilanList.length > 0 && (
                                   <div className="mt-3 bg-white rounded-lg p-3 border border-indigo-200">
@@ -1001,6 +1070,75 @@ const PerAnggotaTab = ({
                                     </div>
                                   </div>
                                 )}
+
+                              {/* Quick Cicil Inline Form - iuran mode */}
+                              {quickCicilOpen === `iuran-${selectedIuran.id}-${member.no}` && (
+                                <div className="mt-2 mb-2 bg-orange-50 rounded-lg p-3 border-2 border-orange-300">
+                                  <div className="flex items-center gap-2 mb-2">
+                                    <LucideIcon
+                                      name="Banknote"
+                                      size={14}
+                                      className="text-orange-600"
+                                    />
+                                    <span className="text-xs font-bold text-orange-700">
+                                      Quick Cicil — {member.nama}
+                                    </span>
+                                  </div>
+                                  <div className="flex gap-2 items-end">
+                                    <div className="flex-1">
+                                      <label className="text-xs text-gray-600 mb-1 block">
+                                        Jumlah (Rp)
+                                      </label>
+                                      <input
+                                        type="number"
+                                        min="1"
+                                        placeholder={`Maks Rp ${(selectedIuran.amount - totalCicilan).toLocaleString("id-ID")}`}
+                                        value={quickCicilAmount}
+                                        onChange={(e) => setQuickCicilAmount(e.target.value)}
+                                        className="w-full p-2 border border-orange-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-400 outline-none"
+                                        autoFocus
+                                      />
+                                    </div>
+                                    <div className="flex-1">
+                                      <label className="text-xs text-gray-600 mb-1 block">
+                                        Keterangan (opsional)
+                                      </label>
+                                      <input
+                                        type="text"
+                                        placeholder="Catatan..."
+                                        value={quickCicilKet}
+                                        onChange={(e) => setQuickCicilKet(e.target.value)}
+                                        className="w-full p-2 border border-orange-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-400 outline-none"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="flex gap-2 mt-2">
+                                    <button
+                                      onClick={() =>
+                                        submitQuickCicil(
+                                          "iuran",
+                                          selectedIuran.id,
+                                          null,
+                                          member.no,
+                                        )
+                                      }
+                                      disabled={
+                                        !quickCicilAmount ||
+                                        Number(quickCicilAmount) <= 0
+                                      }
+                                      className="flex-1 py-2 bg-orange-500 hover:bg-orange-600 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-bold rounded-lg transition-colors"
+                                    >
+                                      Simpan Cicilan
+                                    </button>
+                                    <button
+                                      onClick={closeQuickCicil}
+                                      className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold rounded-lg transition-colors"
+                                    >
+                                      Batal
+                                    </button>
+                                  </div>
+                                </div>
+                              )}
                             </div>
                           );
                         })}

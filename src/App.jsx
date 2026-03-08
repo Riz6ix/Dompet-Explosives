@@ -111,11 +111,16 @@ const App = () => {
     document.title = `${appConfig.appTitle} — Kas Kelas ${appConfig.className}`;
   }, [appConfig.appTitle, appConfig.className]);
 
+  const audioCtxRef = React.useRef(null);
   const playSound = React.useCallback(
     (type) => {
       if (!soundEnabled) return;
       try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        if (!audioCtxRef.current || audioCtxRef.current.state === "closed") {
+          audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        const ctx = audioCtxRef.current;
+        if (ctx.state === "suspended") ctx.resume();
         const makeOsc = (freq, oscType, startT, endT, vol = 0.08) => {
           const o = ctx.createOscillator();
           const g = ctx.createGain();
@@ -1001,7 +1006,10 @@ const App = () => {
 
   // Hitung total kas mingguan yang terkumpul
   const totalKasMingguan = Object.keys(kasMingguan).reduce((total, key) => {
-    return kasMingguan[key] ? total + KAS_MINGGUAN_AMOUNT : total;
+    if (!kasMingguan[key]) return total;
+    const weekNum = parseInt(key.split("-")[0]);
+    if (disabledWeeks[weekNum]) return total;
+    return total + KAS_MINGGUAN_AMOUNT;
   }, 0);
 
   // Hitung total iuran khusus yang terkumpul
@@ -1189,7 +1197,7 @@ const App = () => {
   const rpgWeeklyQuests = React.useMemo(() => {
     const weekStart = new Date();
     weekStart.setDate(weekStart.getDate() - weekStart.getDay());
-    const weekKey = weekStart.toISOString().split("T")[0];
+    const weekKey = `${weekStart.getFullYear()}-${String(weekStart.getMonth() + 1).padStart(2, "0")}-${String(weekStart.getDate()).padStart(2, "0")}`;
     const claimed =
       rpgData.weeklyLastClaim === weekKey
         ? (rpgData.completedQuests || []).filter(
@@ -1708,7 +1716,7 @@ const App = () => {
     const today = new Date().toISOString().split("T")[0];
     const weekStart = new Date();
     weekStart.setDate(weekStart.getDate() - weekStart.getDay());
-    const weekKey = weekStart.toISOString().split("T")[0];
+    const weekKey = `${weekStart.getFullYear()}-${String(weekStart.getMonth() + 1).padStart(2, "0")}-${String(weekStart.getDate()).padStart(2, "0")}`;
     const allQuests = [...rpgDailyQuests, ...rpgWeeklyQuests];
     const quest = allQuests.find((q) => q.id === questId);
     if (!quest || !quest.claimable) return;
@@ -2156,6 +2164,9 @@ const App = () => {
 
   // NOTE: togglePayment & toggleKasMingguan sudah diganti oleh executeToggle (via confirmasi modal)
 
+  const quickCicilLock = React.useRef(false);
+  const cicilanSubmitLock = React.useRef(false);
+
   // FUNCTION: QUICK CICIL (shortcut dari CekBayarTab & PerAnggotaTab)
   const handleQuickCicil = (
     type,
@@ -2165,6 +2176,9 @@ const App = () => {
     amount,
     keterangan,
   ) => {
+    if (quickCicilLock.current) return;
+    quickCicilLock.current = true;
+    setTimeout(() => { quickCicilLock.current = false; }, 500);
     if (!amount || amount <= 0) {
       showToast("Jumlah cicilan harus lebih dari 0!", "error");
       return;
@@ -2298,6 +2312,9 @@ const App = () => {
 
   // FUNCTION: SUBMIT CICILAN
   const handleCicilanSubmit = () => {
+    if (cicilanSubmitLock.current) return;
+    cicilanSubmitLock.current = true;
+    setTimeout(() => { cicilanSubmitLock.current = false; }, 500);
     const parsedAmount = Number(cicilanForm.amount) || 0;
     if (!parsedAmount || parsedAmount <= 0) {
       showToast("Jumlah cicilan harus lebih dari 0!", "error");
@@ -3334,7 +3351,7 @@ const App = () => {
             (m) => m.no !== 0 && payments[`${iuran.id}-${m.no}`] === true,
           ).length;
           const cicilanTotal = members
-            .filter((m) => m.no !== 0)
+            .filter((m) => m.no !== 0 && !payments[`${iuran.id}-${m.no}`])
             .reduce(
               (sum, m) => sum + getTotalCicilan("iuran", iuran.id, null, m.no),
               0,

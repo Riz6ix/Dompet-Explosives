@@ -105,6 +105,17 @@ const PengaturanTab = ({
       )
     );
 
+    // Cascade update cicilan entries
+    setCicilan((prev) => {
+      const next = {};
+      Object.entries(prev).forEach(([key, list]) => {
+        next[key] = list.map((c) =>
+          c.memberNo === memberNo ? { ...c, memberName: updatedName } : c
+        );
+      });
+      return next;
+    });
+
     showToast("Nama & riwayat diperbarui", "success");
     logActivity(
       "manage_member",

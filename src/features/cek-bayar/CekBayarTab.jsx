@@ -269,9 +269,9 @@ const CekBayarTab = ({
                 (m) => m.no !== 0,
               ).length;
               const targetTotal = totalSiswa * KAS_MINGGUAN_AMOUNT;
-              const persentase = Math.round(
+              const persentase = targetTotal > 0 ? Math.round(
                 (totalTerkumpul / targetTotal) * 100,
-              );
+              ) : 0;
 
               // ANIMATION CLASS berdasarkan persentase
               const isComplete = persentase >= 100;
@@ -1035,9 +1035,9 @@ const CekBayarTab = ({
                 (m) => m.no !== 0,
               ).length;
               const targetTotal = totalSiswa * selectedIuran.amount;
-              const persentase = Math.round(
+              const persentase = targetTotal > 0 ? Math.round(
                 (totalTerkumpul / targetTotal) * 100,
-              );
+              ) : 0;
 
               return (
                 <>

@@ -76,7 +76,7 @@ const Toast = ({ toast, onClose }) => {
                   : "bg-blue-400"
             }`}
             style={{
-              animation: "toastProgress 2.7s linear forwards",
+              animation: "toastProgress 3s linear forwards",
             }}
           />
         </div>

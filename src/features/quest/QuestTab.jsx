@@ -206,7 +206,10 @@ const QuestTab = ({
 
   // ── Inject CSS keyframes once on mount ──
   React.useEffect(() => {
+    const STYLE_ID = 'quest-tab-keyframes';
+    if (document.getElementById(STYLE_ID)) return;
     const style = document.createElement('style');
+    style.id = STYLE_ID;
     style.textContent = `
         @keyframes shimmer {
           0%   { background-position: -200% center; }
@@ -366,7 +369,10 @@ const QuestTab = ({
         }
       `;
     document.head.appendChild(style);
-    return () => style.remove();
+    return () => {
+      const el = document.getElementById(STYLE_ID);
+      if (el) el.remove();
+    };
   }, []);
 
   // ── Claim with XP float ──
